@@ -1,16 +1,15 @@
 import { readFileSync, readdirSync, statSync, writeFileSync, unlinkSync } from 'fs';
 import { join, resolve, relative } from 'path';
 import { fileURLToPath } from 'url';
-import glob from 'glob';
+import { globSync } from 'glob'; // Gebruik globSync voor de synchrone variant
 
 const __dirname = fileURLToPath(new URL('.', import.meta.url));
 
-// Hergebruik de bestaande functies uit je script
 function cleanupOldLogs() {
     const logPattern = resolve(__dirname, '../../../../file-log-*.txt');
-    const oldLogs = glob.sync(logPattern);
-    
-    oldLogs.forEach(logFile => {
+    const oldLogs: string[] = globSync(logPattern); // globSync geeft een string[] terug
+
+    oldLogs.forEach((logFile: string) => {
         try {
             unlinkSync(logFile);
         } catch (error) {
@@ -102,4 +101,4 @@ export async function POST(request: Request) {
             headers: { 'Content-Type': 'application/json' },
         });
     }
-} 
+}

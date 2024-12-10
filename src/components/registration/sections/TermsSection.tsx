@@ -60,4 +60,4 @@ export const TermsSection: React.FC<SectionProps> = ({ formData, setFormData }) 
       />
     </div>
   );
-}; 
+};

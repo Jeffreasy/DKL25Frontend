@@ -64,4 +64,4 @@ export const RoleSection: React.FC<SectionProps> = ({ formData, setFormData }) =
       </div>
     </div>
   );
-}; 
+};

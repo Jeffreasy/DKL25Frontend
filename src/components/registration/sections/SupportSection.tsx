@@ -47,4 +47,4 @@ const SupportSection: React.FC<SectionProps> = ({ formData, setFormData }) => {
   );
 };
 
-export default SupportSection; 
+export default SupportSection;
