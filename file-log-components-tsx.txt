@@ -1,0 +1,4984 @@
+=== Files Log (.tsx) ===
+
+Gegenereerd op: 2024-12-08T20:36:41.440Z
+Zoekmap: src\components
+Bestandstype: .tsx
+Aantal bestanden: 64
+
+
+=== File 1/64: src\components\about\AboutHeader.tsx ===
+
+import React from 'react';
+
+const AboutHeader: React.FC = () => {
+  return (
+    <div className="text-center mb-12">
+      <h1 className="flex items-center justify-center text-4xl md:text-5xl lg:text-6xl font-bold font-heading text-gray-900 mb-5 tracking-tight">
+        <span className="material-icons-round text-4xl md:text-5xl text-primary mr-2">
+          groups
+        </span>
+        Over Ons
+      </h1>
+      <p className="max-w-3xl mx-auto text-lg md:text-xl font-light text-gray-600 leading-relaxed">
+        De Koninklijke Loop wordt georganiseerd door een groep mensen die elkaar allemaal door het werken en leven in zorginstellingen hebben ontmoet.
+      </p>
+    </div>
+  );
+};
+
+export default AboutHeader; 
+
+
+=== File 2/64: src\components\about\AboutImage.tsx ===
+
+import React from 'react';
+
+const AboutImage: React.FC = () => {
+  return (
+    <div className="my-12 text-center max-w-4xl mx-auto">
+      <div className="relative overflow-hidden rounded-xl mb-6 group">
+        <img
+          src="https://cdn.prod.website-files.com/65c6896e8519c5d0bae5586f/66c263cb03f03f94f9921898_8c4a504471.jpg"
+          alt="Teamleden wandelend"
+          className="w-full h-auto block transition-transform duration-300 group-hover:scale-102"
+          loading="eager"
+        />
+      </div>
+      <div className="flex flex-col items-center gap-4">
+        <p className="text-gray-600 text-lg font-light leading-relaxed max-w-2xl border-b border-gray-200 pb-4">
+          <span className="material-icons-round text-primary align-middle mr-1">
+            people
+          </span>
+          Van links naar rechts: Jeffrey | Salih | Peter | Fenny | Michel kon helaas niet bij de fotoshoot aanwezig zijn.
+        </p>
+        <a
+          href="https://beeldpakker.nl/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="group flex items-center transition-transform duration-300 hover:-translate-y-1 focus:outline-none focus:ring-2 focus:ring-primary/20 rounded"
+          aria-label="Bezoek de website van Beeldpakker"
+        >
+          <img
+            src="https://cdn.prod.website-files.com/65c6896e8519c5d0bae5586f/664f48b72335550e9cdfadf8_a7963a8992%20(1).png"
+            alt="Beeldpakker - Fotografie"
+            className="h-[140px] w-auto opacity-95 transition-opacity group-hover:opacity-100"
+            loading="lazy"
+          />
+          <span className="material-icons-round text-primary opacity-0 group-hover:opacity-100 transition-opacity ml-2">
+            launch
+          </span>
+        </a>
+      </div>
+    </div>
+  );
+};
+
+export default AboutImage; 
+
+
+=== File 3/64: src\components\about\AboutSection.tsx ===
+
+import React from 'react';
+import AboutHeader from './AboutHeader';
+import AboutImage from './AboutImage';
+import ContentGrid from './ContentGrid';
+
+const AboutSection: React.FC = () => {
+  return (
+    <div className="w-full max-w-[1400px] mx-auto px-6 py-12 font-roboto antialiased">
+      <AboutHeader />
+      <AboutImage />
+      <ContentGrid />
+    </div>
+  );
+};
+
+export default AboutSection; 
+
+
+=== File 4/64: src\components\about\ContentGrid.tsx ===
+
+import React from 'react';
+import ContentSection from './ContentSection';
+import { contentSections } from './about.data';
+
+const ContentGrid: React.FC = () => {
+  return (
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 mt-16">
+      {contentSections.map((section, index) => (
+        <ContentSection key={index} {...section} />
+      ))}
+    </div>
+  );
+};
+
+export default ContentGrid; 
+
+
+=== File 5/64: src\components\about\ContentSection.tsx ===
+
+import React from 'react';
+
+interface ContentSectionProps {
+  icon: string;
+  title: string;
+  content: string[];
+  isThankYou?: boolean;
+}
+
+const ContentSection: React.FC<ContentSectionProps> = ({ icon, title, content, isThankYou }) => {
+  return (
+    <div 
+      className="bg-white p-8 rounded-xl border border-gray-100 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:border-primary group cursor-default"
+      tabIndex={0}
+    >
+      <h2 className="flex items-center text-2xl font-heading font-semibold text-gray-900 mb-6 relative pb-3">
+        <span className="material-icons-round text-2xl text-primary mr-2 transition-transform duration-300 group-hover:-translate-y-1">
+          {icon}
+        </span>
+        {title}
+        <div className="absolute bottom-0 left-0 w-15 h-0.5 bg-primary transition-all duration-300 group-hover:w-24" />
+      </h2>
+      <div className="space-y-4 text-gray-600 leading-relaxed">
+        {content.map((paragraph, index) => (
+          isThankYou && index === content.length - 1 ? (
+            <p key={index} className="text-center font-medium text-gray-900 mt-6 p-4 bg-primary/10 rounded-lg">
+              <span className="material-icons-round text-primary align-middle mr-1">
+                favorite
+              </span>
+              {paragraph}
+            </p>
+          ) : (
+            <p key={index}>{paragraph}</p>
+          )
+        ))}
+      </div>
+    </div>
+  );
+};
+
+export default ContentSection; 
+
+
+=== File 6/64: src\components\admin\dashboard\DashboardStats.tsx ===
+
+import React from 'react';
+import { formatCurrency } from '@/utils/format';
+
+interface StatsData {
+  totalRegistrations: number;
+  pendingRegistrations: number;
+  totalDonations: number;
+  totalAmount: number;
+}
+
+interface DashboardStatsProps {
+  stats: StatsData;
+}
+
+export const DashboardStats: React.FC<DashboardStatsProps> = ({ stats }) => {
+  const items = [
+    {
+      label: 'Totaal Inschrijvingen',
+      value: stats.totalRegistrations,
+      icon: '👥',
+      formatter: (value: number) => value.toString()
+    },
+    {
+      label: 'Wachtende Inschrijvingen',
+      value: stats.pendingRegistrations,
+      icon: '⏳',
+      formatter: (value: number) => value.toString()
+    },
+    {
+      label: 'Aantal Donaties',
+      value: stats.totalDonations,
+      icon: '🎁',
+      formatter: (value: number) => value.toString()
+    },
+    {
+      label: 'Totaal Gedoneerd',
+      value: stats.totalAmount,
+      icon: '💰',
+      formatter: formatCurrency
+    }
+  ];
+
+  return (
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      {items.map((item, index) => (
+        <div key={index} className="bg-white p-6 rounded-xl shadow-sm">
+          <div className="flex items-center space-x-4">
+            <div className="text-3xl">{item.icon}</div>
+            <div>
+              <h3 className="text-sm font-medium text-gray-500">{item.label}</h3>
+              <p className="text-2xl font-bold text-gray-900">
+                {item.formatter(item.value)}
+              </p>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}; 
+
+
+=== File 7/64: src\components\admin\dashboard\RecentDonations.tsx ===
+
+import React from 'react';
+import { Link } from 'react-router-dom';
+
+interface Donation {
+  id: string;
+  donor: string;
+  amount: number;
+  date: string;
+}
+
+export const RecentDonations: React.FC = () => {
+  const donations: Donation[] = [
+    // Mock data
+    {
+      id: '1',
+      donor: 'Jane Smith',
+      amount: 50,
+      date: '2024-03-15'
+    },
+    // Add more mock data as needed
+  ];
+
+  return (
+    <div className="bg-white rounded-xl shadow-sm p-6">
+      <div className="flex justify-between items-center mb-4">
+        <h2 className="text-lg font-semibold">Recente Donaties</h2>
+        <Link to="/admin/donations" className="text-primary hover:underline">
+          Bekijk alle
+        </Link>
+      </div>
+      <div className="space-y-4">
+        {donations.map((donation) => (
+          <div key={donation.id} className="flex justify-between items-center p-4 hover:bg-gray-50 rounded-lg">
+            <div>
+              <p className="font-medium">{donation.donor}</p>
+              <p className="text-sm text-gray-500">{donation.date}</p>
+            </div>
+            <div>
+              <p className="font-medium text-green-600">€{donation.amount}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}; 
+
+
+=== File 8/64: src\components\admin\dashboard\RecentRegistrations.tsx ===
+
+import React from 'react';
+import { Link } from 'react-router-dom';
+
+interface Registration {
+  id: string;
+  name: string;
+  email: string;
+  date: string;
+  status: 'pending' | 'approved' | 'rejected';
+}
+
+export const RecentRegistrations: React.FC = () => {
+  const registrations: Registration[] = [
+    // Mock data
+    {
+      id: '1',
+      name: 'John Doe',
+      email: 'john@example.com',
+      date: '2024-03-15',
+      status: 'pending'
+    },
+    // Add more mock data as needed
+  ];
+
+  return (
+    <div className="bg-white rounded-xl shadow-sm p-6">
+      <div className="flex justify-between items-center mb-4">
+        <h2 className="text-lg font-semibold">Recente Inschrijvingen</h2>
+        <Link to="/admin/registrations" className="text-primary hover:underline">
+          Bekijk alle
+        </Link>
+      </div>
+      <div className="space-y-4">
+        {registrations.map((reg) => (
+          <div key={reg.id} className="flex justify-between items-center p-4 hover:bg-gray-50 rounded-lg">
+            <div>
+              <p className="font-medium">{reg.name}</p>
+              <p className="text-sm text-gray-500">{reg.email}</p>
+            </div>
+            <div className="text-right">
+              <p className="text-sm text-gray-500">{reg.date}</p>
+              <span className={`inline-block px-2 py-1 text-xs rounded-full ${
+                reg.status === 'approved' ? 'bg-green-100 text-green-800' :
+                reg.status === 'rejected' ? 'bg-red-100 text-red-800' :
+                'bg-yellow-100 text-yellow-800'
+              }`}>
+                {reg.status}
+              </span>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}; 
+
+
+=== File 9/64: src\components\admin\registration\RegistrationTable.tsx ===
+
+import React from 'react';
+import type { Registration, RegistrationStatus } from '@/types/api.types';
+import { useAdmin } from '@/hooks/useAdmin';
+import { formatDate } from '@/utils/date';
+
+interface RegistrationTableProps {
+  registrations: Registration[];
+}
+
+const statusOptions: RegistrationStatus[] = ['pending', 'approved', 'rejected', 'cancelled'];
+
+const statusLabels: Record<RegistrationStatus, string> = {
+  pending: 'In afwachting',
+  approved: 'Goedgekeurd',
+  rejected: 'Afgewezen',
+  cancelled: 'Geannuleerd'
+};
+
+export const RegistrationTable: React.FC<RegistrationTableProps> = ({ 
+  registrations
+}) => {
+  const { updateRegistrationStatus } = useAdmin();
+
+  const getStatusBadgeClass = (status: RegistrationStatus): string => {
+    switch (status) {
+      case 'pending': return 'bg-yellow-100 text-yellow-800';
+      case 'approved': return 'bg-green-100 text-green-800';
+      case 'rejected': return 'bg-red-100 text-red-800';
+      case 'cancelled': return 'bg-gray-100 text-gray-800';
+      default: return 'bg-gray-100 text-gray-800';
+    }
+  };
+
+  return (
+    <div className="overflow-x-auto">
+      <table className="min-w-full divide-y divide-gray-200">
+        <thead className="bg-gray-50">
+          <tr>
+            <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              Naam
+            </th>
+            <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              Email
+            </th>
+            <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              Rol
+            </th>
+            <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              Status
+            </th>
+            <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              Datum
+            </th>
+            <th scope="col" className="relative px-6 py-3">
+              <span className="sr-only">Acties</span>
+            </th>
+          </tr>
+        </thead>
+        <tbody className="bg-white divide-y divide-gray-200">
+          {registrations.map((registration) => (
+            <tr key={registration.id}>
+              <td className="px-6 py-4 whitespace-nowrap">
+                <div className="text-sm font-medium text-gray-900">
+                  {registration.formData.personalInfo.firstName} {registration.formData.personalInfo.lastName}
+                </div>
+              </td>
+              <td className="px-6 py-4 whitespace-nowrap">
+                <div className="text-sm text-gray-500">{registration.formData.personalInfo.email}</div>
+              </td>
+              <td className="px-6 py-4 whitespace-nowrap">
+                <div className="text-sm text-gray-900">{registration.formData.roleInfo.role}</div>
+              </td>
+              <td className="px-6 py-4 whitespace-nowrap">
+                <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${getStatusBadgeClass(registration.status)}`}>
+                  {statusLabels[registration.status]}
+                </span>
+              </td>
+              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                {formatDate(registration.createdAt)}
+              </td>
+              <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                <select
+                  value={registration.status}
+                  onChange={(e) => updateRegistrationStatus(registration.id, e.target.value as RegistrationStatus)}
+                  className="rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring focus:ring-primary/20"
+                >
+                  {statusOptions.map(status => (
+                    <option key={status} value={status}>
+                      {statusLabels[status]}
+                    </option>
+                  ))}
+                </select>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+}; 
+
+
+=== File 10/64: src\components\admin\registrations\RegistrationFilters.tsx ===
+
+import React from 'react';
+
+interface RegistrationFiltersProps {
+  onFilterChange: (filters: FilterState) => void;
+}
+
+interface FilterState {
+  status: string;
+  role: string;
+  dateRange: string;
+}
+
+export const RegistrationFilters: React.FC<RegistrationFiltersProps> = ({ onFilterChange }) => {
+  return (
+    <div className="bg-white p-4 rounded-xl shadow-sm mb-6">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div>
+          <label className="block text-sm font-medium text-gray-700">Status</label>
+          <select
+            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary"
+            onChange={(e) => onFilterChange({ status: e.target.value } as FilterState)}
+          >
+            <option value="">Alle</option>
+            <option value="pending">In afwachting</option>
+            <option value="approved">Goedgekeurd</option>
+            <option value="rejected">Afgewezen</option>
+          </select>
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium text-gray-700">Rol</label>
+          <select
+            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary"
+            onChange={(e) => onFilterChange({ role: e.target.value } as FilterState)}
+          >
+            <option value="">Alle</option>
+            <option value="Deelnemer">Deelnemer</option>
+            <option value="Begeleider">Begeleider</option>
+            <option value="Vrijwilliger">Vrijwilliger</option>
+          </select>
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium text-gray-700">Periode</label>
+          <select
+            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary"
+            onChange={(e) => onFilterChange({ dateRange: e.target.value } as FilterState)}
+          >
+            <option value="all">Alle tijd</option>
+            <option value="today">Vandaag</option>
+            <option value="week">Deze week</option>
+            <option value="month">Deze maand</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  );
+}; 
+
+
+=== File 11/64: src\components\admin\registrations\RegistrationList.tsx ===
+
+import React from 'react';
+import { HiCalendar, HiUser, HiMail, HiCheck, HiX, HiExclamation } from 'react-icons/hi';
+
+interface Registration {
+  id: string;
+  name: string;
+  email: string;
+  date: string;
+  status: 'pending' | 'approved' | 'rejected';
+  type: string;
+}
+
+export const RegistrationList: React.FC = () => {
+  const registrations: Registration[] = [
+    {
+      id: '1',
+      name: 'John Doe',
+      email: 'john@example.com',
+      date: '2024-03-15',
+      status: 'pending',
+      type: 'Deelnemer'
+    },
+    // Meer mock data hier
+  ];
+
+  const getStatusIcon = (status: string) => {
+    switch (status) {
+      case 'approved':
+        return <HiCheck className="w-5 h-5 text-green-500" />;
+      case 'rejected':
+        return <HiX className="w-5 h-5 text-red-500" />;
+      default:
+        return <HiExclamation className="w-5 h-5 text-yellow-500" />;
+    }
+  };
+
+  return (
+    <div className="bg-white rounded-xl shadow-sm overflow-hidden">
+      <div className="p-6 border-b">
+        <h2 className="text-xl font-semibold text-gray-900">Inschrijvingen</h2>
+      </div>
+
+      {/* Desktop view */}
+      <div className="hidden md:block">
+        <table className="min-w-full divide-y divide-gray-200">
+          <thead className="bg-gray-50">
+            <tr>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Status
+              </th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Naam
+              </th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Email
+              </th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Type
+              </th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Datum
+              </th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Acties
+              </th>
+            </tr>
+          </thead>
+          <tbody className="bg-white divide-y divide-gray-200">
+            {registrations.map((registration) => (
+              <tr key={registration.id} className="hover:bg-gray-50">
+                <td className="px-6 py-4 whitespace-nowrap">
+                  <div className="flex items-center">
+                    {getStatusIcon(registration.status)}
+                    <span className="ml-2 text-sm font-medium capitalize">
+                      {registration.status}
+                    </span>
+                  </div>
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  <div className="flex items-center">
+                    <HiUser className="w-4 h-4 mr-2 text-gray-400" />
+                    <div className="text-sm font-medium text-gray-900">
+                      {registration.name}
+                    </div>
+                  </div>
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  <div className="flex items-center text-sm text-gray-500">
+                    <HiMail className="w-4 h-4 mr-2" />
+                    {registration.email}
+                  </div>
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-[#F47B20]/10 text-[#F47B20]">
+                    {registration.type}
+                  </span>
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  <div className="flex items-center text-sm text-gray-500">
+                    <HiCalendar className="w-4 h-4 mr-2" />
+                    {registration.date}
+                  </div>
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                  <div className="flex items-center space-x-3">
+                    <button className="text-green-600 hover:text-green-800">
+                      <HiCheck className="w-5 h-5" />
+                    </button>
+                    <button className="text-red-600 hover:text-red-800">
+                      <HiX className="w-5 h-5" />
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      {/* Mobile view */}
+      <div className="md:hidden">
+        <div className="divide-y divide-gray-200">
+          {registrations.map((registration) => (
+            <div key={registration.id} className="p-4 space-y-3">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center">
+                  {getStatusIcon(registration.status)}
+                  <span className="ml-2 text-sm font-medium capitalize">
+                    {registration.status}
+                  </span>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <button className="text-green-600 hover:text-green-800 p-1">
+                    <HiCheck className="w-5 h-5" />
+                  </button>
+                  <button className="text-red-600 hover:text-red-800 p-1">
+                    <HiX className="w-5 h-5" />
+                  </button>
+                </div>
+              </div>
+
+              <div className="flex items-center text-sm">
+                <HiUser className="w-4 h-4 mr-2 text-gray-400" />
+                <span className="font-medium text-gray-900">{registration.name}</span>
+              </div>
+
+              <div className="flex items-center text-sm text-gray-500">
+                <HiMail className="w-4 h-4 mr-2" />
+                {registration.email}
+              </div>
+
+              <div className="flex items-center justify-between">
+                <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-[#F47B20]/10 text-[#F47B20]">
+                  {registration.type}
+                </span>
+                <div className="flex items-center text-sm text-gray-500">
+                  <HiCalendar className="w-4 h-4 mr-2" />
+                  {registration.date}
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}; 
+
+
+=== File 12/64: src\components\admin\shared\AdminHeader.tsx ===
+
+import React from 'react';
+import { useAuth } from '@/hooks/useAuth';
+import { Link } from 'react-router-dom';
+
+export const AdminHeader: React.FC = () => {
+  const { user, logout } = useAuth();
+
+  return (
+    <header className="bg-white shadow-sm">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between h-16">
+          <div className="flex items-center">
+            <Link to="/admin" className="text-xl font-bold text-primary">
+              DKL Admin
+            </Link>
+          </div>
+          <div className="flex items-center space-x-4">
+            <span className="text-sm text-gray-600">
+              {user?.name}
+            </span>
+            <button
+              onClick={logout}
+              className="text-sm text-gray-600 hover:text-gray-900"
+            >
+              Uitloggen
+            </button>
+          </div>
+        </div>
+      </div>
+    </header>
+  );
+}; 
+
+
+=== File 13/64: src\components\admin\shared\AdminLayout.tsx ===
+
+import React from 'react';
+import { AdminHeader } from './AdminHeader';
+import { AdminSidebar } from './AdminSidebar';
+
+interface AdminLayoutProps {
+  children: React.ReactNode;
+  title?: string;
+  actions?: React.ReactNode;
+}
+
+export const AdminLayout: React.FC<AdminLayoutProps> = ({ 
+  children, 
+  title,
+  actions 
+}) => {
+  return (
+    <div className="min-h-screen bg-gray-100">
+      <AdminHeader />
+      <div className="flex">
+        <AdminSidebar />
+        <main className="flex-1 p-8">
+          {(title || actions) && (
+            <div className="flex justify-between items-center mb-8">
+              {title && (
+                <h1 className="text-2xl font-bold text-gray-900">{title}</h1>
+              )}
+              {actions && (
+                <div className="flex items-center space-x-4">
+                  {actions}
+                </div>
+              )}
+            </div>
+          )}
+          {children}
+        </main>
+      </div>
+    </div>
+  );
+}; 
+
+
+=== File 14/64: src\components\admin\shared\AdminNavbar.tsx ===
+
+import React from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '@/hooks/useAuth';
+import { HiMenuAlt2 } from 'react-icons/hi';
+
+interface AdminNavbarProps {
+  onMenuClick: () => void;
+}
+
+export const AdminNavbar: React.FC<AdminNavbarProps> = ({ onMenuClick }) => {
+  const navigate = useNavigate();
+  const { logout } = useAuth();
+
+  return (
+    <nav className="bg-[#F47B20] h-16">
+      <div className="h-full px-4">
+        <div className="flex justify-between items-center h-full">
+          <div className="flex items-center">
+            <button
+              onClick={onMenuClick}
+              className="lg:hidden mr-3 text-white hover:text-white/80"
+            >
+              <HiMenuAlt2 className="h-6 w-6" />
+            </button>
+            <Link to="/" className="flex items-center">
+              <img 
+                className="h-8 w-auto mr-2" 
+                src="https://res.cloudinary.com/dgfuv7wif/image/upload/v1733267882/664b8c1e593a1e81556b4238_0760849fb8_yn6vdm.png" 
+                alt="DKL Logo" 
+              />
+              <span className="text-lg font-medium text-white">Admin Panel</span>
+            </Link>
+          </div>
+          <div className="flex items-center space-x-4">
+            <Link to="/" className="text-sm text-white hover:text-white/80">
+              Terug naar website
+            </Link>
+            <button
+              onClick={() => {
+                logout();
+                navigate('/login');
+              }}
+              className="px-4 py-2 bg-white text-[#F47B20] rounded-md text-sm font-medium hover:bg-white/90"
+            >
+              Uitloggen
+            </button>
+          </div>
+        </div>
+      </div>
+    </nav>
+  );
+}; 
+
+
+=== File 15/64: src\components\admin\shared\AdminSidebar.tsx ===
+
+import React from 'react';
+import { NavLink } from 'react-router-dom';
+import { 
+  HiHome, 
+  HiUserGroup, 
+  HiCurrencyEuro,
+  HiUsers,
+  HiCog
+} from 'react-icons/hi';
+
+const menuItems = [
+  { path: '/admin', icon: HiHome, label: 'Dashboard' },
+  { path: '/admin/registrations', icon: HiUserGroup, label: 'Inschrijvingen' },
+  { path: '/admin/donations', icon: HiCurrencyEuro, label: 'Donaties' },
+  { path: '/admin/users', icon: HiUsers, label: 'Gebruikers' },
+  { path: '/admin/settings', icon: HiCog, label: 'Instellingen' }
+];
+
+export const AdminSidebar: React.FC = () => {
+  return (
+    <aside className="w-64 bg-white border-r border-gray-200 min-h-screen">
+      <nav className="mt-5 px-2">
+        <div className="space-y-1">
+          {menuItems.map(item => (
+            <NavLink
+              key={item.path}
+              to={item.path}
+              className={({ isActive }: { isActive: boolean }) => `
+                group flex items-center px-2 py-2 text-sm font-medium rounded-md
+                ${isActive 
+                  ? 'bg-primary text-white' 
+                  : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'}
+              `}
+            >
+              {({ isActive }) => (
+                <>
+                  <item.icon 
+                    className={`
+                      mr-3 h-5 w-5
+                      ${isActive ? 'text-white' : 'text-gray-400 group-hover:text-gray-500'}
+                    `}
+                  />
+                  {item.label}
+                </>
+              )}
+            </NavLink>
+          ))}
+        </div>
+      </nav>
+    </aside>
+  );
+}; 
+
+
+=== File 16/64: src\components\admin\users\UserActivityLog.tsx ===
+
+import React from 'react';
+
+interface ActivityLogEntry {
+  id: string;
+  action: string;
+  timestamp: string;
+  details: string;
+  ipAddress?: string;
+}
+
+interface UserActivityLogProps {
+  userId: string;
+}
+
+export const UserActivityLog: React.FC<UserActivityLogProps> = ({ userId }) => {
+  // Mock data - vervang dit door echte API calls
+  const activities: ActivityLogEntry[] = [
+    {
+      id: '1',
+      action: 'Login',
+      timestamp: '2024-03-15 14:30:00',
+      details: `Gebruiker ${userId} succesvol ingelogd`,
+      ipAddress: '192.168.1.1'
+    },
+    {
+      id: '2',
+      action: 'Profiel Update',
+      timestamp: '2024-03-15 14:35:00',
+      details: `Gebruiker ${userId} heeft email adres gewijzigd`,
+      ipAddress: '192.168.1.1'
+    }
+  ];
+
+  return (
+    <div className="bg-white rounded-xl shadow-sm">
+      <div className="p-6 border-b">
+        <h3 className="text-lg font-semibold">Activiteiten Log</h3>
+      </div>
+      
+      <div className="p-6">
+        <div className="space-y-6">
+          {activities.map((activity) => (
+            <div key={activity.id} className="flex items-start space-x-4">
+              <div className="flex-shrink-0">
+                <div className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center">
+                  <span className="text-gray-500 text-sm">🔍</span>
+                </div>
+              </div>
+              <div className="flex-1">
+                <div className="flex items-center justify-between">
+                  <h4 className="text-sm font-medium text-gray-900">{activity.action}</h4>
+                  <span className="text-sm text-gray-500">{activity.timestamp}</span>
+                </div>
+                <p className="mt-1 text-sm text-gray-600">{activity.details}</p>
+                {activity.ipAddress && (
+                  <p className="mt-1 text-xs text-gray-500">IP: {activity.ipAddress}</p>
+                )}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}; 
+
+
+=== File 17/64: src\components\admin\users\UserDetails.tsx ===
+
+import React, { useState } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
+import { UserPasswordReset } from './UserPasswordReset';
+import { UserActivityLog } from './UserActivityLog';
+import { UserPermissions } from './UserPermissions';
+
+interface UserFormData {
+  name: string;
+  email: string;
+  role: 'admin' | 'user';
+  status: 'active' | 'inactive';
+}
+
+type ActiveTab = 'profile' | 'permissions' | 'activity' | 'security';
+
+export const UserDetails: React.FC = () => {
+  const { id } = useParams<{ id: string }>();
+  const navigate = useNavigate();
+  const [activeTab, setActiveTab] = useState<ActiveTab>('profile');
+  
+  const [formData, setFormData] = useState<UserFormData>({
+    name: 'Admin User',
+    email: 'admin@dkl.nl',
+    role: 'admin',
+    status: 'active'
+  });
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    console.log('Update user:', formData);
+  };
+
+  const renderTabContent = () => {
+    switch (activeTab) {
+      case 'profile':
+        return (
+          <form onSubmit={handleSubmit} className="space-y-6">
+            <div>
+              <label className="block text-sm font-medium text-gray-700">Naam</label>
+              <input
+                type="text"
+                value={formData.name}
+                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary"
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700">Email</label>
+              <input
+                type="email"
+                value={formData.email}
+                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary"
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700">Rol</label>
+              <select
+                value={formData.role}
+                onChange={(e) => setFormData({ ...formData, role: e.target.value as 'admin' | 'user' })}
+                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary"
+              >
+                <option value="user">Gebruiker</option>
+                <option value="admin">Administrator</option>
+              </select>
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700">Status</label>
+              <select
+                value={formData.status}
+                onChange={(e) => setFormData({ ...formData, status: e.target.value as 'active' | 'inactive' })}
+                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary"
+              >
+                <option value="active">Actief</option>
+                <option value="inactive">Inactief</option>
+              </select>
+            </div>
+
+            <div className="flex justify-end space-x-4">
+              <button
+                type="submit"
+                className="px-4 py-2 bg-primary text-white rounded-md hover:bg-primary-dark"
+              >
+                Opslaan
+              </button>
+            </div>
+          </form>
+        );
+      case 'permissions':
+        return (
+          <UserPermissions 
+            userId={id || ''} 
+            onSave={(permissions) => console.log('Save permissions:', permissions)} 
+          />
+        );
+      case 'activity':
+        return <UserActivityLog userId={id || ''} />;
+      case 'security':
+        return (
+          <UserPasswordReset
+            userId={id || ''}
+            onSuccess={() => console.log('Password reset success')}
+            onCancel={() => setActiveTab('profile')}
+          />
+        );
+      default:
+        return null;
+    }
+  };
+
+  return (
+    <div className="bg-white rounded-xl shadow-sm">
+      <div className="p-6 border-b">
+        <div className="flex justify-between items-center mb-6">
+          <h2 className="text-xl font-semibold">Gebruiker Details</h2>
+          <button
+            onClick={() => navigate('/admin/users')}
+            className="text-gray-600 hover:text-gray-900"
+          >
+            Terug naar overzicht
+          </button>
+        </div>
+
+        {/* Tabs */}
+        <div className="border-b border-gray-200">
+          <nav className="-mb-px flex space-x-8">
+            <button
+              onClick={() => setActiveTab('profile')}
+              className={`pb-4 px-1 border-b-2 font-medium text-sm
+                ${activeTab === 'profile'
+                  ? 'border-primary text-primary'
+                  : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                }`}
+            >
+              Profiel
+            </button>
+            <button
+              onClick={() => setActiveTab('permissions')}
+              className={`pb-4 px-1 border-b-2 font-medium text-sm
+                ${activeTab === 'permissions'
+                  ? 'border-primary text-primary'
+                  : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                }`}
+            >
+              Rechten
+            </button>
+            <button
+              onClick={() => setActiveTab('activity')}
+              className={`pb-4 px-1 border-b-2 font-medium text-sm
+                ${activeTab === 'activity'
+                  ? 'border-primary text-primary'
+                  : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                }`}
+            >
+              Activiteit
+            </button>
+            <button
+              onClick={() => setActiveTab('security')}
+              className={`pb-4 px-1 border-b-2 font-medium text-sm
+                ${activeTab === 'security'
+                  ? 'border-primary text-primary'
+                  : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                }`}
+            >
+              Beveiliging
+            </button>
+          </nav>
+        </div>
+      </div>
+
+      <div className="p-6">
+        {renderTabContent()}
+      </div>
+    </div>
+  );
+}; 
+
+
+=== File 18/64: src\components\admin\users\UserList.tsx ===
+
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { HiUserAdd, HiMail, HiClock, HiTrash, HiPencil } from 'react-icons/hi';
+
+interface User {
+  id: string;
+  name: string;
+  email: string;
+  role: 'admin' | 'user';
+  lastLogin: string;
+  createdAt: string;
+  status: 'active' | 'inactive';
+}
+
+export const UserList: React.FC = () => {
+  const users: User[] = [
+    {
+      id: '1',
+      name: 'Admin User',
+      email: 'admin@dkl.nl',
+      role: 'admin',
+      lastLogin: '2024-03-15',
+      createdAt: '2024-01-01',
+      status: 'active'
+    },
+    // Meer mock data kan hier worden toegevoegd
+  ];
+
+  return (
+    <div className="bg-white rounded-xl shadow-sm overflow-hidden">
+      <div className="flex justify-between p-6 border-b">
+        <h2 className="text-xl font-semibold text-gray-900">Gebruikers</h2>
+        <button className="inline-flex items-center px-4 py-2 bg-[#F47B20] text-white rounded-md hover:bg-[#F47B20]/90">
+          <HiUserAdd className="w-5 h-5 mr-2" />
+          <span>Nieuwe Gebruiker</span>
+        </button>
+      </div>
+
+      {/* Desktop view */}
+      <div className="hidden md:block">
+        <table className="min-w-full divide-y divide-gray-200">
+          <thead className="bg-gray-50">
+            <tr>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Naam
+              </th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Email
+              </th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Rol
+              </th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Status
+              </th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Laatste Login
+              </th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Acties
+              </th>
+            </tr>
+          </thead>
+          <tbody className="bg-white divide-y divide-gray-200">
+            {users.map((user) => (
+              <tr key={user.id}>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  <div className="text-sm font-medium text-gray-900">{user.name}</div>
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  <div className="text-sm text-gray-500">{user.email}</div>
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  <span className={`px-2 py-1 text-xs rounded-full ${
+                    user.role === 'admin' ? 'bg-purple-100 text-purple-800' : 'bg-blue-100 text-blue-800'
+                  }`}>
+                    {user.role}
+                  </span>
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  <span className={`px-2 py-1 text-xs rounded-full ${
+                    user.status === 'active' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
+                  }`}>
+                    {user.status}
+                  </span>
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                  {user.lastLogin}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                  <Link 
+                    to={`/admin/users/${user.id}`}
+                    className="text-primary hover:text-primary-dark mr-4"
+                  >
+                    Details
+                  </Link>
+                  <button className="text-red-600 hover:text-red-900">
+                    Verwijderen
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      {/* Mobile view */}
+      <div className="md:hidden">
+        <div className="divide-y divide-gray-200">
+          {users.map((user) => (
+            <div key={user.id} className="p-4 space-y-3">
+              <div className="flex items-center justify-between">
+                <div className="text-sm font-medium text-gray-900">{user.name}</div>
+                <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium
+                  ${user.role === 'admin' 
+                    ? 'bg-purple-100 text-purple-800' 
+                    : 'bg-blue-100 text-blue-800'
+                  }`}>
+                  {user.role}
+                </span>
+              </div>
+
+              <div className="flex items-center text-sm text-gray-500">
+                <HiMail className="w-4 h-4 mr-2" />
+                {user.email}
+              </div>
+
+              <div className="flex items-center text-sm text-gray-500">
+                <HiClock className="w-4 h-4 mr-2" />
+                {user.lastLogin}
+              </div>
+
+              <div className="flex items-center justify-between pt-2">
+                <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium
+                  ${user.status === 'active'
+                    ? 'bg-green-100 text-green-800'
+                    : 'bg-red-100 text-red-800'
+                  }`}>
+                  {user.status}
+                </span>
+                <div className="flex items-center space-x-3">
+                  <Link 
+                    to={`/admin/users/${user.id}`}
+                    className="text-[#F47B20] hover:text-[#F47B20]/80 inline-flex items-center"
+                  >
+                    <HiPencil className="w-4 h-4" />
+                  </Link>
+                  <button className="text-red-600 hover:text-red-800">
+                    <HiTrash className="w-4 h-4" />
+                  </button>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}; 
+
+
+=== File 19/64: src\components\admin\users\UserPasswordReset.tsx ===
+
+import React, { useState } from 'react';
+
+interface UserPasswordResetProps {
+  userId: string;
+  onSuccess?: () => void;
+  onCancel?: () => void;
+}
+
+export const UserPasswordReset: React.FC<UserPasswordResetProps> = ({ userId, onSuccess, onCancel }) => {
+  const [newPassword, setNewPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [error, setError] = useState('');
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError('');
+
+    if (newPassword !== confirmPassword) {
+      setError('Wachtwoorden komen niet overeen');
+      return;
+    }
+
+    try {
+      // API call implementatie
+      console.log('Reset password for user:', userId, newPassword);
+      onSuccess?.();
+    } catch (err) {
+      setError('Er is een fout opgetreden bij het resetten van het wachtwoord');
+    }
+  };
+
+  return (
+    <div className="bg-white p-6 rounded-xl shadow-sm">
+      <h3 className="text-lg font-semibold mb-4">Wachtwoord Resetten</h3>
+      
+      <form onSubmit={handleSubmit} className="space-y-4">
+        <div>
+          <label className="block text-sm font-medium text-gray-700">
+            Nieuw Wachtwoord
+          </label>
+          <input
+            type="password"
+            value={newPassword}
+            onChange={(e) => setNewPassword(e.target.value)}
+            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary"
+            required
+          />
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium text-gray-700">
+            Bevestig Wachtwoord
+          </label>
+          <input
+            type="password"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary"
+            required
+          />
+        </div>
+
+        {error && (
+          <div className="text-red-600 text-sm">{error}</div>
+        )}
+
+        <div className="flex justify-end space-x-4 mt-6">
+          <button
+            type="button"
+            onClick={onCancel}
+            className="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50"
+          >
+            Annuleren
+          </button>
+          <button
+            type="submit"
+            className="px-4 py-2 bg-primary text-white rounded-md hover:bg-primary-dark"
+          >
+            Wachtwoord Resetten
+          </button>
+        </div>
+      </form>
+    </div>
+  );
+}; 
+
+
+=== File 20/64: src\components\admin\users\UserPermissions.tsx ===
+
+import React, { useState } from 'react';
+
+interface Permission {
+  id: string;
+  name: string;
+  description: string;
+  granted: boolean;
+}
+
+interface UserPermissionsProps {
+  userId: string;
+  onSave?: (permissions: string[]) => void;
+}
+
+export const UserPermissions: React.FC<UserPermissionsProps> = ({ userId, onSave }) => {
+  // Mock data - vervang dit door echte API calls
+  const [permissions, setPermissions] = useState<Permission[]>([
+    {
+      id: `${userId}_users_view`,
+      name: 'Gebruikers Bekijken',
+      description: 'Kan alle gebruikers bekijken',
+      granted: true
+    },
+    {
+      id: 'users_edit',
+      name: 'Gebruikers Bewerken',
+      description: 'Kan gebruikersgegevens aanpassen',
+      granted: false
+    },
+    {
+      id: 'registrations_manage',
+      name: 'Inschrijvingen Beheren',
+      description: 'Kan inschrijvingen goedkeuren en afwijzen',
+      granted: true
+    }
+  ]);
+
+  const handleTogglePermission = (permissionId: string) => {
+    setPermissions(permissions.map(permission => 
+      permission.id === permissionId 
+        ? { ...permission, granted: !permission.granted }
+        : permission
+    ));
+  };
+
+  const handleSave = () => {
+    const grantedPermissions = permissions
+      .filter(p => p.granted)
+      .map(p => p.id);
+    onSave?.(grantedPermissions);
+  };
+
+  return (
+    <div className="bg-white rounded-xl shadow-sm">
+      <div className="p-6 border-b">
+        <h3 className="text-lg font-semibold">Gebruikersrechten</h3>
+      </div>
+      
+      <div className="p-6">
+        <div className="space-y-4">
+          {permissions.map((permission) => (
+            <div key={permission.id} className="flex items-start space-x-4">
+              <div className="flex-shrink-0">
+                <input
+                  type="checkbox"
+                  checked={permission.granted}
+                  onChange={() => handleTogglePermission(permission.id)}
+                  className="h-4 w-4 text-primary focus:ring-primary border-gray-300 rounded"
+                />
+              </div>
+              <div className="flex-1">
+                <label className="text-sm font-medium text-gray-900">
+                  {permission.name}
+                </label>
+                <p className="mt-1 text-sm text-gray-500">
+                  {permission.description}
+                </p>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div className="mt-6 flex justify-end">
+          <button
+            onClick={handleSave}
+            className="px-4 py-2 bg-primary text-white rounded-md hover:bg-primary-dark"
+          >
+            Rechten Opslaan
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}; 
+
+
+=== File 21/64: src\components\auth\ProtectedRoute.tsx ===
+
+import React from 'react';
+import { Navigate } from 'react-router-dom';
+import { useAuth } from '@/hooks/useAuth';
+
+interface ProtectedRouteProps {
+  children: React.ReactNode;
+}
+
+export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
+  const { isAuthenticated } = useAuth();
+
+  if (!isAuthenticated) {
+    return <Navigate to="/login" replace />;
+  }
+
+  return <>{children}</>;
+}; 
+
+
+=== File 22/64: src\components\cards\CTACard.tsx ===
+
+import React from 'react';
+import { SvgIconComponent } from '@mui/icons-material';
+
+interface CTACardProps {
+  title: string;
+  description: string;
+  icon: SvgIconComponent;
+  buttonText: string;
+  onClick: () => void;
+}
+
+const CTACard: React.FC<CTACardProps> = ({ title, description, icon: Icon, buttonText, onClick }) => {
+  return (
+    <div className="group bg-white rounded-[20px] p-6 flex flex-col gap-4 h-full min-h-[380px] relative overflow-hidden shadow-md transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
+      {/* Icon Section */}
+      <div className="relative w-20 h-20 mx-auto mb-4">
+        <div className="absolute inset-0 bg-gradient-to-r from-primary to-primary-light rounded-[18px] -rotate-6 transition-transform duration-300 group-hover:rotate-0 group-hover:scale-105" />
+        <div className="relative z-10 w-full h-full flex items-center justify-center">
+          <Icon className="w-10 h-10 text-white" />
+        </div>
+      </div>
+
+      {/* Content */}
+      <div className="text-center flex-grow flex flex-col">
+        <h3 className="text-2xl font-bold text-gray-900 mb-4 tracking-tight">{title}</h3>
+        <div className="bg-primary/5 border-2 border-primary/10 rounded-xl p-4 mb-4 flex-grow flex items-center justify-center transition-all duration-300 group-hover:border-primary/30 group-hover:bg-primary/8 min-h-[80px]">
+          <p className="text-gray-600 leading-relaxed">{description}</p>
+        </div>
+      </div>
+
+      {/* Button */}
+      <div className="mt-auto flex justify-center">
+        <button
+          onClick={onClick}
+          className="inline-flex items-center justify-center gap-2 px-8 py-3.5 bg-gradient-to-r from-primary to-primary-light text-white font-medium rounded-full shadow transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg group/btn"
+        >
+          <span>{buttonText}</span>
+          <svg 
+            className="w-5 h-5 transition-transform duration-300 group-hover/btn:translate-x-1" 
+            viewBox="0 0 24 24"
+            fill="currentColor"
+          >
+            <path d="M13 5L8 10H12V19H14V10H18L13 5Z" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  );
+};
+
+export default CTACard; 
+
+
+=== File 23/64: src\components\cards\CTACards.tsx ===
+
+import React from 'react';
+import CTACard from './CTACard';
+import EmailIcon from '@mui/icons-material/Email';
+import GroupsIcon from '@mui/icons-material/Groups';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+
+interface CTACardsProps {
+  onInschrijfClick: () => void;
+  onDonatieClick: () => void;
+}
+
+const CTACards: React.FC<CTACardsProps> = ({ onInschrijfClick, onDonatieClick }) => {
+  const cards = [
+    {
+      title: "Schrijf je in",
+      description: "Vanaf 15 januari 2025 start de inschrijving",
+      icon: EmailIcon,
+      buttonText: "Inschrijven",
+      onClick: onInschrijfClick
+    },
+    {
+      title: "Over ons",
+      description: "Wie zijn de mensen achter De Koninklijke Loop. We stellen ons graag even voor!",
+      icon: GroupsIcon,
+      buttonText: "Wie zijn wij",
+      onClick: () => window.location.href = '/overons'
+    },
+    {
+      title: "Ondersteun ons",
+      description: "Help mee om samen geld in te zamelen voor het Liliane Fonds!",
+      icon: FavoriteIcon,
+      buttonText: "Doneren",
+      onClick: onDonatieClick
+    }
+  ];
+
+  return (
+    <section className="relative py-16 px-5 bg-gray-50 font-['Roboto_Slab'] overflow-hidden">
+      {/* Animated Background Elements - Nu subtieler */}
+      <div className="absolute inset-0 overflow-hidden">
+        {/* Grotere, zachtere cirkel rechtsboven */}
+        <div className="absolute -top-1/4 -right-1/4 w-[800px] h-[800px] rounded-full bg-gradient-to-br from-primary/3 to-transparent blur-[100px] animate-pulse-slow" />
+        
+        {/* Kleinere, zachtere cirkel linksonder */}
+        <div className="absolute -bottom-1/4 -left-1/4 w-[600px] h-[600px] rounded-full bg-gradient-to-tr from-primary/2 to-transparent blur-[80px] animate-float" />
+        
+        {/* Subtielere diagonale strepen */}
+        <div className="absolute top-1/3 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-primary/3 to-transparent transform -rotate-45 animate-slide" />
+        <div className="absolute bottom-1/3 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-primary/3 to-transparent transform -rotate-45 animate-slide-reverse" />
+      </div>
+
+      {/* Content met subtielere underline */}
+      <div className="relative z-10">
+        <div className="text-center mb-10">
+          <h2 className="text-[clamp(2rem,4vw,2.5rem)] text-gray-900 font-bold mb-4 tracking-tight">
+            Kom in actie
+          </h2>
+          {/* Subtielere underline met gradient */}
+          <div className="relative mx-auto w-16 h-0.5 mb-4 overflow-hidden">
+            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-primary/40 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-primary/20 to-transparent animate-shine" />
+          </div>
+          <p className="text-[clamp(1rem,2vw,1.2rem)] text-gray-600">
+            Ontdek hoe je kunt deelnemen aan De Koninklijke Loop
+          </p>
+        </div>
+
+        <div className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 px-4">
+          {cards.map((card, index) => (
+            <CTACard
+              key={index}
+              {...card}
+            />
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default CTACards; 
+
+
+=== File 24/64: src\components\dev\FileLogger.tsx ===
+
+import { useState, useEffect } from 'react';
+import {
+  Box,
+  Button,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  TextField,
+  Typography,
+  Paper,
+  CircularProgress,
+} from '@mui/material';
+
+interface Directory {
+  name: string;
+  path: string;
+}
+
+interface LoggerState {
+  directories: Directory[];
+  selectedDirectory: string;
+  fileType: string;
+  isLoading: boolean;
+  result: {
+    success: boolean;
+    message: string;
+    filesFound?: number;
+    logPath?: string;
+  } | null;
+}
+
+export default function FileLogger() {
+  const [state, setState] = useState<LoggerState>({
+    directories: [],
+    selectedDirectory: '',
+    fileType: '.tsx',
+    isLoading: true,
+    result: null,
+  });
+
+  useEffect(() => {
+    // Laad beschikbare directories bij component mount
+    fetchDirectories();
+  }, []);
+
+  const fetchDirectories = async () => {
+    try {
+      const response = await fetch('/api/dev/directories');
+      const data = await response.json();
+      setState(prev => ({
+        ...prev,
+        directories: data,
+        isLoading: false,
+      }));
+    } catch (error) {
+      console.error('Kon directories niet laden:', error);
+      setState(prev => ({
+        ...prev,
+        isLoading: false,
+      }));
+    }
+  };
+
+  const handleSubmit = async () => {
+    setState(prev => ({ ...prev, isLoading: true, result: null }));
+
+    try {
+      const response = await fetch('/api/dev/generate-log', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          directory: state.selectedDirectory,
+          fileType: state.fileType,
+        }),
+      });
+
+      const result = await response.json();
+      setState(prev => ({
+        ...prev,
+        isLoading: false,
+        result: result,
+      }));
+    } catch (error) {
+      setState(prev => ({
+        ...prev,
+        isLoading: false,
+        result: {
+          success: false,
+          message: 'Er is een fout opgetreden bij het genereren van de log.',
+        },
+      }));
+    }
+  };
+
+  if (state.isLoading && !state.directories.length) {
+    return (
+      <Box display="flex" justifyContent="center" p={4}>
+        <CircularProgress />
+      </Box>
+    );
+  }
+
+  return (
+    <Paper sx={{ p: 3, maxWidth: 600, mx: 'auto', my: 4 }}>
+      <Typography variant="h5" gutterBottom>
+        File Logger
+      </Typography>
+
+      <FormControl fullWidth sx={{ mb: 2 }}>
+        <InputLabel>Directory</InputLabel>
+        <Select
+          value={state.selectedDirectory}
+          label="Directory"
+          onChange={(e) => setState(prev => ({ ...prev, selectedDirectory: e.target.value }))}
+        >
+          <MenuItem value="src">Hele src map</MenuItem>
+          {state.directories.map((dir) => (
+            <MenuItem key={dir.path} value={dir.path}>
+              {dir.name}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
+
+      <TextField
+        fullWidth
+        label="Bestandstype"
+        value={state.fileType}
+        onChange={(e) => setState(prev => ({ ...prev, fileType: e.target.value }))}
+        helperText="Bijvoorbeeld: .tsx, .ts, .js, .jsx"
+        sx={{ mb: 3 }}
+      />
+
+      <Button
+        variant="contained"
+        onClick={handleSubmit}
+        disabled={!state.selectedDirectory || !state.fileType || state.isLoading}
+        fullWidth
+      >
+        {state.isLoading ? <CircularProgress size={24} /> : 'Genereer Log'}
+      </Button>
+
+      {state.result && (
+        <Box mt={3} p={2} bgcolor={state.result.success ? 'success.light' : 'error.light'} borderRadius={1}>
+          <Typography color="textPrimary">
+            {state.result.message}
+          </Typography>
+          {state.result.success && (
+            <>
+              <Typography variant="body2" mt={1}>
+                Aantal bestanden: {state.result.filesFound}
+              </Typography>
+              <Typography variant="body2">
+                Log bestand: {state.result.logPath}
+              </Typography>
+            </>
+          )}
+        </Box>
+      )}
+    </Paper>
+  );
+} 
+
+
+=== File 25/64: src\components\faq\FAQ.tsx ===
+
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import { faqData } from './faq.data';
+import { useDebounce } from '../../hooks/useDebounce';
+
+interface FAQProps {
+  onInschrijfClick?: () => void;
+  onContactClick?: () => void;
+}
+
+interface QuestionItemProps {
+  question: string;
+  answer: string;
+  icon: string;
+  action?: boolean;
+  actionText?: string;
+  onInschrijfClick?: () => void;
+}
+
+const QuestionItem: React.FC<QuestionItemProps> = ({
+  question,
+  answer,
+  icon,
+  action,
+  actionText,
+  onInschrijfClick
+}) => (
+  <details className="group">
+    <summary className="flex items-center cursor-pointer p-4 bg-primary text-white font-bold rounded-lg transition-colors duration-300 hover:bg-secondary">
+      <span className="mr-2 text-xl" role="img" aria-label={icon}>
+        {icon}
+      </span>
+      <span className="flex-1">{question}</span>
+      <span className="transform transition-transform duration-300 group-open:rotate-45 text-xl">
+        +
+      </span>
+    </summary>
+    <div className="mt-2 p-4 bg-gray-50 rounded-lg">
+      <p className="text-gray-700 leading-relaxed">{answer}</p>
+      {action && (
+        <button
+          onClick={onInschrijfClick}
+          className="mt-4 bg-primary text-white px-6 py-2 rounded-lg hover:bg-primary/90 transition-colors focus:outline-none focus:ring-2 focus:ring-primary/50"
+        >
+          {actionText}
+        </button>
+      )}
+    </div>
+  </details>
+);
+
+const SearchBar: React.FC<{
+  value: string;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+}> = ({ value, onChange }) => (
+  <div className="mb-8">
+    <input
+      type="text"
+      id="kl-qa-search-input"
+      placeholder="🔍 Zoek je vraag..."
+      value={value}
+      onChange={onChange}
+      className="w-full p-3 text-base border-2 border-primary rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all duration-200"
+      aria-label="Zoek in veelgestelde vragen"
+    />
+  </div>
+);
+
+const BackToTopButton: React.FC<{
+  show: boolean;
+  onClick: () => void;
+}> = ({ show, onClick }) => (
+  <button
+    onClick={onClick}
+    className={`fixed bottom-5 right-5 w-12 h-12 bg-primary text-white rounded-full shadow-lg transition-all duration-300 hover:bg-secondary focus:outline-none focus:ring-2 focus:ring-primary/50 z-50 ${
+      show ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4 pointer-events-none'
+    }`}
+    aria-label="Terug naar boven"
+  >
+    ⬆
+  </button>
+);
+
+const FAQ: React.FC<FAQProps> = ({ onInschrijfClick, onContactClick }) => {
+  const [searchTerm, setSearchTerm] = useState('');
+  const [showBackToTop, setShowBackToTop] = useState(false);
+  const debouncedSearchTerm = useDebounce(searchTerm, 300);
+
+  const handleScroll = useCallback(() => {
+    setShowBackToTop(window.scrollY > 300);
+  }, []);
+
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [handleScroll]);
+
+  const handleBackToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const filteredCategories = useMemo(() => {
+    const searchLower = debouncedSearchTerm.toLowerCase();
+    return faqData
+      .map(category => ({
+        ...category,
+        questions: category.questions.filter(q => 
+          q.question.toLowerCase().includes(searchLower) ||
+          q.answer.toLowerCase().includes(searchLower)
+        )
+      }))
+      .filter(category => category.questions.length > 0);
+  }, [debouncedSearchTerm]);
+
+  return (
+    <section className="w-full max-w-7xl mx-auto px-4 py-8 font-roboto bg-white text-gray-800">
+      <h2 className="text-4xl md:text-5xl text-center text-primary font-bold mb-8">
+        Alles wat je wilt weten over De Koninklijke Loop
+      </h2>
+      
+      <SearchBar 
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+      />
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        {filteredCategories.map((category) => (
+          <div 
+            key={category.title} 
+            className="bg-white rounded-xl shadow-lg p-6 transition-transform duration-300 hover:shadow-xl"
+          >
+            <h3 className="flex items-center text-2xl text-secondary font-bold mb-4 pb-2 border-b-2 border-secondary">
+              <span className="mr-2 text-3xl" role="img" aria-label={category.icon}>
+                {category.icon}
+              </span>
+              {category.title}
+            </h3>
+            <div className="space-y-4">
+              {category.questions.map((qa) => (
+                <QuestionItem
+                  key={qa.question}
+                  {...qa}
+                  onInschrijfClick={qa.question.includes('contact') ? onContactClick : onInschrijfClick}
+                />
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <div className="mt-12 text-center">
+        <p className="text-gray-600 mb-4">
+          Kom je er niet uit of heb je een specifieke vraag?
+        </p>
+        <button
+          onClick={onContactClick}
+          className="bg-gradient-to-r from-primary to-primary-dark text-white px-8 py-3 rounded-lg
+            font-medium hover:translate-y-[-2px] hover:shadow-lg transition-all duration-300"
+        >
+          Neem direct contact op
+        </button>
+      </div>
+
+      <BackToTopButton 
+        show={showBackToTop}
+        onClick={handleBackToTop}
+      />
+    </section>
+  );
+};
+
+export default FAQ; 
+
+
+=== File 26/64: src\components\footer\Footer.tsx ===
+
+import React from 'react';
+import SocialIcon from '../socials/SocialIcon';
+import { SocialLink } from '../socials/social.data';
+import { Link } from 'react-router-dom';
+
+type FooterProps = {
+  onInschrijfClick: () => void;
+};
+
+type SocialLinkType = {
+  platform: SocialLink['platform'];
+  url: string;
+  hoverColor: string;
+};
+
+type QuickLinkType = {
+  text: string;
+  to?: string;  // Veranderd van url naar to voor React Router
+  action?: () => void;
+};
+
+const Footer: React.FC<FooterProps> = ({ onInschrijfClick }) => {
+  const currentYear = new Date().getFullYear();
+  
+  const socialLinks: SocialLinkType[] = [
+    {
+      platform: 'facebook',
+      url: 'https://www.facebook.com/p/De-Koninklijke-Loop-61556315443279/',
+      hoverColor: 'hover:bg-[#1877f2]'
+    },
+    {
+      platform: 'youtube',
+      url: 'https://www.youtube.com/@DeKoninklijkeLoop',
+      hoverColor: 'hover:bg-[#ff0000]'
+    },
+    {
+      platform: 'instagram',
+      url: 'https://www.instagram.com/koninklijkeloop/',
+      hoverColor: 'hover:bg-gradient-to-tr from-[#f09433] via-[#dc2743] to-[#bc1888]'
+    }
+  ] as const;
+
+  const quickLinks: QuickLinkType[] = [
+    {
+      text: 'Wat is De Koninklijke Loop?',
+      to: '/wat-is-de-koninklijkeloop'  // Dit is correct
+    },
+    {
+      text: 'Inschrijven 2025',
+      action: onInschrijfClick  // Dit is correct (opent modal)
+    },
+    {
+      text: 'Over Ons',
+      to: '/over-ons'  // Dit is correct
+    },
+    {
+      text: 'Contact',
+      to: '/faq'  // Dit is correct (FAQ pagina bevat het contactformulier)
+    }
+  ];
+
+  return (
+    <footer className="bg-primary py-12 px-4 font-['Roboto_Slab'] text-white mt-auto">
+      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
+        {/* Left Column */}
+        <div className="flex flex-col items-center md:items-start">
+          <img
+            src="https://res.cloudinary.com/dgfuv7wif/image/upload/v1733267882/664b8c1e593a1e81556b4238_0760849fb8_yn6vdm.png"
+            alt="De Koninklijke Loop logo"
+            className="w-[90px] mb-4"
+          />
+          <div className="text-center md:text-left space-y-0.5 mb-4">
+            <p className="text-sm opacity-90">Doe je met ons mee?</p>
+            <p className="text-xs opacity-80">Samen op weg voor een goed doel.</p>
+            <p className="text-sm font-semibold">Loop mee met de Koninklijke Loop!</p>
+          </div>
+
+          {/* Social Links */}
+          <div className="flex gap-3 mt-4">
+            {socialLinks.map(({ platform, url, hoverColor }) => (
+              <a
+                key={platform}
+                href={url}
+                className={`social-link w-9 h-9 flex items-center justify-center rounded-full bg-white/10 ${hoverColor} transition-all duration-300 hover:-translate-y-0.5 group`}
+                aria-label={platform}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <SocialIcon 
+                  platform={platform} 
+                  className="w-[18px] h-[18px] fill-white transition-transform group-hover:scale-110" 
+                />
+              </a>
+            ))}
+          </div>
+        </div>
+
+        {/* Right Column */}
+        <div className="flex flex-col items-center md:items-start">
+          <h3 className="text-base font-semibold mb-4">Snelle Links</h3>
+          <ul className="space-y-2 text-center md:text-left">
+            {quickLinks.map((link) => (
+              <li key={link.text}>
+                {link.to ? (
+                  <Link
+                    to={link.to}
+                    className="text-sm opacity-90 hover:opacity-100 hover:underline transition-opacity"
+                  >
+                    {link.text}
+                  </Link>
+                ) : (
+                  <button
+                    onClick={link.action}
+                    className="text-sm opacity-90 hover:opacity-100 hover:underline transition-opacity"
+                  >
+                    {link.text}
+                  </button>
+                )}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+
+      {/* Bottom Copyright */}
+      <div className="mt-8 pt-4 border-t border-white/20 text-center">
+        <p className="text-xs opacity-80">
+          &copy; {currentYear} De Koninklijke Loop. Alle rechten voorbehouden.
+        </p>
+      </div>
+    </footer>
+  );
+};
+
+export default Footer; 
+
+
+=== File 27/64: src\components\gallery\MainSlider.tsx ===
+
+import React from 'react';
+import type { Photo } from './types';
+import NavigationButton from './NavigationButton';
+
+interface MainSliderProps {
+  photos: Photo[];
+  currentIndex: number;
+  onPrevious: () => void;
+  onNext: () => void;
+  isAnimating: boolean;
+}
+
+const MainSlider: React.FC<MainSliderProps> = ({
+  photos,
+  currentIndex,
+  onPrevious,
+  onNext,
+  isAnimating
+}) => {
+  return (
+    <div className="relative aspect-[16/9] mb-4 rounded-2xl overflow-hidden bg-gray-100 group shadow-xl">
+      {photos.map((photo, index) => (
+        <div
+          key={photo.id}
+          className={`
+            absolute inset-0 
+            transition-all duration-500 ease-out
+            ${isAnimating ? 'scale-[1.02]' : 'scale-100'}
+            ${index === currentIndex 
+              ? 'opacity-100 visible transform-none' 
+              : index < currentIndex 
+                ? 'opacity-0 invisible -translate-x-full' 
+                : 'opacity-0 invisible translate-x-full'
+            }
+          `}
+        >
+          <img
+            src={photo.url}
+            alt={photo.alt}
+            className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
+            loading="lazy"
+          />
+        </div>
+      ))}
+
+      {/* Overlay met gradient */}
+      <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+
+      {/* Navigation Buttons met hover effect */}
+      <div className="absolute inset-x-4 top-1/2 -translate-y-1/2 flex items-center justify-between">
+        <NavigationButton direction="previous" onClick={onPrevious} />
+        <NavigationButton direction="next" onClick={onNext} />
+      </div>
+    </div>
+  );
+};
+
+export default MainSlider; 
+
+
+=== File 28/64: src\components\gallery\NavigationButton.tsx ===
+
+import React from 'react';
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+
+interface NavigationButtonProps {
+  direction: 'previous' | 'next';
+  onClick: () => void;
+}
+
+const NavigationButton: React.FC<NavigationButtonProps> = ({ direction, onClick }) => {
+  const Icon = direction === 'previous' ? ChevronLeftIcon : ChevronRightIcon;
+  
+  return (
+    <button
+      className={`
+        flex items-center justify-center
+        w-10 h-10 sm:w-12 sm:h-12
+        bg-white/90 hover:bg-white
+        rounded-full
+        shadow-lg hover:shadow-xl
+        transition-all duration-300
+        group
+      `}
+      onClick={onClick}
+      aria-label={direction === 'previous' ? 'Vorige foto' : 'Volgende foto'}
+    >
+      <Icon 
+        className={`
+          text-gray-700 text-2xl sm:text-3xl
+          transition-transform duration-300
+          ${direction === 'previous' 
+            ? 'group-hover:-translate-x-0.5' 
+            : 'group-hover:translate-x-0.5'
+          }
+        `}
+      />
+    </button>
+  );
+};
+
+export default NavigationButton; 
+
+
+=== File 29/64: src\components\gallery\PhotoGallery.tsx ===
+
+import React, { useState, useCallback, useEffect } from 'react';
+import MainSlider from './MainSlider';
+import ThumbnailSlider from './ThumbnailSlider';
+import { photos } from './photos.data';
+import PlayArrowIcon from '@mui/icons-material/PlayArrow';
+import PauseIcon from '@mui/icons-material/Pause';
+
+const PhotoGallery: React.FC = () => {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isAnimating, setIsAnimating] = useState(false);
+  const [isAutoPlaying, setIsAutoPlaying] = useState(false);
+  const [touchStart, setTouchStart] = useState<number | null>(null);
+
+  // Auto-play functionaliteit
+  useEffect(() => {
+    if (!isAutoPlaying) return;
+    
+    const interval = setInterval(() => {
+      handleNext();
+    }, 5000); // Verander foto elke 5 seconden
+
+    return () => clearInterval(interval);
+  }, [isAutoPlaying, currentIndex]);
+
+  // Touch handlers voor swipe functionaliteit
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setTouchStart(e.touches[0].clientX);
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    if (!touchStart) return;
+
+    const touchEnd = e.touches[0].clientX;
+    const diff = touchStart - touchEnd;
+
+    if (Math.abs(diff) > 50) { // Minimale swipe afstand
+      if (diff > 0) {
+        handleNext();
+      } else {
+        handlePrevious();
+      }
+      setTouchStart(null);
+    }
+  };
+
+  const handlePrevious = useCallback(() => {
+    if (isAnimating) return;
+    setIsAnimating(true);
+    setCurrentIndex(prev => (prev === 0 ? photos.length - 1 : prev - 1));
+    setTimeout(() => setIsAnimating(false), 500);
+  }, [isAnimating]);
+
+  const handleNext = useCallback(() => {
+    if (isAnimating) return;
+    setIsAnimating(true);
+    setCurrentIndex(prev => (prev === photos.length - 1 ? 0 : prev + 1));
+    setTimeout(() => setIsAnimating(false), 500);
+  }, [isAnimating]);
+
+  // Keyboard navigatie
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'ArrowLeft') handlePrevious();
+      if (e.key === 'ArrowRight') handleNext();
+      if (e.key === 'Space') setIsAutoPlaying(prev => !prev);
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [handleNext, handlePrevious]);
+
+  return (
+    <section 
+      className="py-16 px-5 bg-white font-['Roboto_Slab']"
+      onTouchStart={handleTouchStart}
+      onTouchMove={handleTouchMove}
+    >
+      {/* Title Section met animatie */}
+      <div className="text-center mb-12 relative pb-8 opacity-0 animate-fade-in">
+        <h2 className="text-[clamp(2rem,4vw,2.75rem)] text-gray-900 font-semibold mb-3">
+          Bekijk onze Foto's
+        </h2>
+        <p className="text-[clamp(1rem,2.5vw,1.25rem)] text-gray-600 mb-4">
+          De Koninklijke Loop 2024
+        </p>
+        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[60px] h-[3px] bg-primary rounded-full" />
+      </div>
+
+      {/* Gallery Container met controls */}
+      <div className="max-w-[1200px] mx-auto">
+        <div className="relative">
+          <MainSlider
+            photos={photos}
+            currentIndex={currentIndex}
+            onPrevious={handlePrevious}
+            onNext={handleNext}
+            isAnimating={isAnimating}
+          />
+
+          {/* Auto-play control */}
+          <button
+            onClick={() => setIsAutoPlaying(prev => !prev)}
+            className="absolute bottom-4 right-4 z-10 bg-white/90 p-2 rounded-full shadow-lg hover:bg-white transition-all"
+            aria-label={isAutoPlaying ? 'Pause slideshow' : 'Start slideshow'}
+          >
+            {isAutoPlaying ? (
+              <PauseIcon className="w-6 h-6 text-gray-700" />
+            ) : (
+              <PlayArrowIcon className="w-6 h-6 text-gray-700" />
+            )}
+          </button>
+
+          {/* Progress bar */}
+          <div className="absolute bottom-0 left-0 right-0 h-1 bg-gray-200">
+            <div
+              className="h-full bg-primary transition-all duration-300"
+              style={{ 
+                width: `${(currentIndex / (photos.length - 1)) * 100}%`,
+                transition: isAutoPlaying ? 'width 5s linear' : 'width 0.3s ease-out'
+              }}
+            />
+          </div>
+        </div>
+
+        <ThumbnailSlider
+          photos={photos}
+          currentIndex={currentIndex}
+          onSelect={setCurrentIndex}
+        />
+
+        {/* Keyboard controls info */}
+        <div className="mt-4 text-center text-sm text-gray-500">
+          <p>Gebruik de pijltjestoetsen om te navigeren, spatiebalk voor autoplay</p>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default PhotoGallery; 
+
+
+=== File 30/64: src\components\gallery\ThumbnailSlider.tsx ===
+
+import React, { useRef } from 'react';
+import type { Photo } from './types';
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+
+interface ThumbnailSliderProps {
+  photos: Photo[];
+  currentIndex: number;
+  onSelect: (index: number) => void;
+}
+
+const ThumbnailSlider: React.FC<ThumbnailSliderProps> = ({
+  photos,
+  currentIndex,
+  onSelect
+}) => {
+  const scrollRef = useRef<HTMLDivElement>(null);
+
+  const scrollToThumbnail = (index: number) => {
+    if (!scrollRef.current) return;
+    const thumbnail = scrollRef.current.children[index] as HTMLElement;
+    if (thumbnail) {
+      thumbnail.scrollIntoView({
+        behavior: 'smooth',
+        block: 'nearest',
+        inline: 'center'
+      });
+    }
+  };
+
+  const handleScroll = (direction: 'left' | 'right') => {
+    if (!scrollRef.current) return;
+    const scrollAmount = direction === 'left' ? -200 : 200;
+    scrollRef.current.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+  };
+
+  return (
+    <div className="relative px-12">
+      {/* Scroll Buttons */}
+      <button
+        onClick={() => handleScroll('left')}
+        className="absolute left-0 top-1/2 -translate-y-1/2 bg-white/90 p-2 rounded-full shadow-lg hover:bg-white transition-all"
+        aria-label="Scroll thumbnails left"
+      >
+        <ChevronLeftIcon className="text-gray-700" />
+      </button>
+
+      <div
+        ref={scrollRef}
+        className="flex gap-2 overflow-x-auto scrollbar-hide scroll-smooth snap-x snap-mandatory py-2"
+        style={{ scrollBehavior: 'smooth' }}
+      >
+        {photos.map((photo, index) => (
+          <button
+            key={photo.id}
+            onClick={() => {
+              onSelect(index);
+              scrollToThumbnail(index);
+            }}
+            className={`
+              flex-none w-24 h-16 rounded-lg overflow-hidden
+              transition-all duration-300
+              ${index === currentIndex 
+                ? 'ring-2 ring-primary scale-105 shadow-lg opacity-100' 
+                : 'ring-1 ring-gray-200 opacity-60 hover:opacity-80'
+              }
+            `}
+          >
+            <img
+              src={photo.url}
+              alt={`Thumbnail ${index + 1}`}
+              className="w-full h-full object-cover"
+              loading="lazy"
+            />
+          </button>
+        ))}
+      </div>
+
+      <button
+        onClick={() => handleScroll('right')}
+        className="absolute right-0 top-1/2 -translate-y-1/2 bg-white/90 p-2 rounded-full shadow-lg hover:bg-white transition-all"
+        aria-label="Scroll thumbnails right"
+      >
+        <ChevronRightIcon className="text-gray-700" />
+      </button>
+    </div>
+  );
+};
+
+export default ThumbnailSlider; 
+
+
+=== File 31/64: src\components\hero\HeroSection.tsx ===
+
+import React from 'react';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import EmailIcon from '@mui/icons-material/Email';
+
+interface HeroSectionProps {
+  onInschrijfClick: () => void;
+  onDonatieClick: () => void;
+}
+
+const HeroSection: React.FC<HeroSectionProps> = ({ onInschrijfClick, onDonatieClick }) => {
+  return (
+    <section className="relative h-[calc(100vh-8rem)]">
+      {/* Video Background */}
+      <div className="absolute inset-0 w-full h-full overflow-hidden">
+        <div className="absolute inset-0 w-[300%] h-[300%] -translate-x-1/4 -translate-y-1/4">
+          <iframe 
+            src="https://streamable.com/e/tt6k80?nocontrols=1&autoplay=1&muted=1&loop=1"
+            className="w-full h-full object-cover"
+            style={{
+              transform: 'scale(1.5)',
+              transformOrigin: 'center center'
+            }}
+            allow="autoplay"
+            title="Achtergrondvideo"
+            loading="lazy"
+          />
+        </div>
+        <div className="absolute inset-0 bg-black/30" />
+      </div>
+
+      {/* Content - Nu bovenaan */}
+      <div className="relative z-10 flex flex-col items-center pt-8 px-4">
+        {/* Buttons */}
+        <div className="flex flex-col sm:flex-row gap-4 mb-6">
+          <button
+            onClick={onInschrijfClick}
+            className="flex items-center justify-center gap-2 px-8 py-4 bg-primary hover:bg-primary-dark text-white font-semibold rounded-full transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg min-w-[160px]"
+          >
+            <EmailIcon />
+            <span>Inschrijven</span>
+          </button>
+          <button
+            onClick={onDonatieClick}
+            className="flex items-center justify-center gap-2 px-8 py-4 bg-primary hover:bg-primary-dark text-white font-semibold rounded-full transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg min-w-[160px]"
+          >
+            <FavoriteIcon />
+            <span>Doneren</span>
+          </button>
+        </div>
+
+        {/* Title */}
+        <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white text-center max-w-4xl leading-tight drop-shadow-lg">
+          De sponsorloop van mensen met een beperking voor een goed doel!
+        </h1>
+      </div>
+    </section>
+  );
+};
+
+export default HeroSection;
+
+
+=== File 32/64: src\components\icons\index.tsx ===
+
+import HomeIcon from '@mui/icons-material/Home';
+import HowToRegIcon from '@mui/icons-material/HowToReg';
+import InfoIcon from '@mui/icons-material/Info';
+import GroupsIcon from '@mui/icons-material/Groups';
+import EmailIcon from '@mui/icons-material/Email';
+import FacebookIcon from '@mui/icons-material/Facebook';
+import InstagramIcon from '@mui/icons-material/Instagram';
+import YouTubeIcon from '@mui/icons-material/YouTube';
+
+export const ICONS = {
+  home: HomeIcon,
+  register: HowToRegIcon,
+  about: GroupsIcon,
+  contact: EmailIcon,
+  info: InfoIcon,
+  facebook: FacebookIcon,
+  instagram: InstagramIcon,
+  youtube: YouTubeIcon,
+} as const;
+
+export type IconName = keyof typeof ICONS; 
+
+
+=== File 33/64: src\components\modals\ContactModal.tsx ===
+
+import React, { useState } from 'react';
+import { FaTimes, FaUser, FaEnvelope, FaPhone, FaComment, FaPaperPlane } from 'react-icons/fa';
+import { useForm } from 'react-hook-form';
+
+interface ContactModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  onPrivacyClick: () => void;
+}
+
+interface FormData {
+  naam: string;
+  email: string;
+  telefoon?: string;
+  bericht: string;
+  website?: string; // honeypot
+  startTime: number;
+}
+
+const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose, onPrivacyClick }) => {
+  if (!isOpen) return null;
+
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const { register, handleSubmit, formState: { errors } } = useForm<FormData>({
+    defaultValues: {
+      startTime: Date.now()
+    }
+  });
+
+  const onSubmit = async (data: FormData) => {
+    setIsSubmitting(true);
+    try {
+      // Implementeer hier je submit logica
+      console.log(data);
+      await new Promise(resolve => setTimeout(resolve, 1000)); // Simulatie
+      onClose(); // Sluit modal na succesvol versturen
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  return (
+    <div className="fixed inset-0 z-50 overflow-y-auto bg-black bg-opacity-50 flex items-center justify-center p-4">
+      <div className="relative bg-white rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-hidden">
+        {/* Header */}
+        <div className="sticky top-0 bg-gradient-to-r from-primary to-primary-dark text-white px-6 py-4 flex items-center justify-between">
+          <h2 className="text-xl font-semibold">Contact</h2>
+          <button
+            onClick={onClose}
+            className="p-1 hover:bg-white/10 rounded-full transition-colors"
+            aria-label="Sluit contact formulier"
+          >
+            <FaTimes size={24} />
+          </button>
+        </div>
+
+        {/* Content */}
+        <div className="p-6 overflow-y-auto">
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-6" noValidate>
+            {/* Honeypot */}
+            <input type="text" {...register('website')} className="hidden" />
+
+            <div className="space-y-4">
+              {/* Naam */}
+              <div className="form-group">
+                <label className="flex items-center gap-2 text-sm font-medium text-gray-700">
+                  <FaUser className="text-primary" />
+                  Naam <span className="text-red-500">*</span>
+                </label>
+                <input
+                  type="text"
+                  {...register('naam', { required: 'Naam is verplicht' })}
+                  className={`w-full px-4 py-3 rounded-lg border-2 focus:ring-2 focus:ring-primary/20 transition-all
+                    ${errors.naam ? 'border-red-500' : 'border-gray-200 hover:border-gray-300'}`}
+                  placeholder="Bijv. Jan Jansen"
+                />
+                {errors.naam && (
+                  <p className="mt-1 text-sm text-red-500">{errors.naam.message}</p>
+                )}
+              </div>
+
+              {/* Email */}
+              <div className="form-group">
+                <label className="flex items-center gap-2 text-sm font-medium text-gray-700">
+                  <FaEnvelope className="text-primary" />
+                  E-mailadres <span className="text-red-500">*</span>
+                </label>
+                <input
+                  type="email"
+                  {...register('email', {
+                    required: 'E-mailadres is verplicht',
+                    pattern: {
+                      value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                      message: 'Ongeldig e-mailadres'
+                    }
+                  })}
+                  className={`w-full px-4 py-3 rounded-lg border-2 focus:ring-2 focus:ring-primary/20 transition-all
+                    ${errors.email ? 'border-red-500' : 'border-gray-200 hover:border-gray-300'}`}
+                  placeholder="Bijv. jan@example.com"
+                />
+                {errors.email && (
+                  <p className="mt-1 text-sm text-red-500">{errors.email.message}</p>
+                )}
+              </div>
+
+              {/* Telefoon */}
+              <div className="form-group">
+                <label className="flex items-center gap-2 text-sm font-medium text-gray-700">
+                  <FaPhone className="text-primary" />
+                  Telefoonnummer
+                </label>
+                <input
+                  type="tel"
+                  {...register('telefoon')}
+                  className="w-full px-4 py-3 rounded-lg border-2 border-gray-200 hover:border-gray-300 focus:ring-2 focus:ring-primary/20 transition-all"
+                  placeholder="(123) 456-7890"
+                />
+              </div>
+
+              {/* Bericht */}
+              <div className="form-group">
+                <label className="flex items-center gap-2 text-sm font-medium text-gray-700">
+                  <FaComment className="text-primary" />
+                  Bericht <span className="text-red-500">*</span>
+                </label>
+                <textarea
+                  {...register('bericht', { required: 'Bericht is verplicht' })}
+                  rows={5}
+                  className={`w-full px-4 py-3 rounded-lg border-2 focus:ring-2 focus:ring-primary/20 transition-all
+                    ${errors.bericht ? 'border-red-500' : 'border-gray-200 hover:border-gray-300'}`}
+                  placeholder="Schrijf je bericht hier..."
+                />
+                {errors.bericht && (
+                  <p className="mt-1 text-sm text-red-500">{errors.bericht.message}</p>
+                )}
+              </div>
+            </div>
+
+            <p className="text-center text-sm text-gray-500">
+              Door dit formulier te verzenden ga je akkoord met ons{' '}
+              <button
+                type="button"
+                onClick={onPrivacyClick}
+                className="text-primary hover:text-primary-dark font-medium underline focus:outline-none focus:ring-2 focus:ring-primary/20 rounded"
+              >
+                privacybeleid
+              </button>
+              .
+            </p>
+
+            <button
+              type="submit"
+              disabled={isSubmitting}
+              className="w-full px-6 py-3 bg-gradient-to-r from-primary to-primary-dark text-white font-medium rounded-lg
+                flex items-center justify-center gap-2 hover:translate-y-[-2px] hover:shadow-lg transition-all duration-300
+                disabled:opacity-50 disabled:hover:translate-y-0 disabled:hover:shadow-none"
+            >
+              {isSubmitting ? (
+                <>
+                  <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                  Verzenden...
+                </>
+              ) : (
+                <>
+                  <FaPaperPlane />
+                  Stuur mijn bericht
+                </>
+              )}
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default ContactModal; 
+
+
+=== File 34/64: src\components\modals\DonatieModal.tsx ===
+
+import React from 'react';
+import { Dialog } from '@headlessui/react';
+import { Link } from 'react-router-dom';
+import CloseIcon from '@mui/icons-material/Close';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+
+interface DonatieModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+}
+
+export const DonatieModal: React.FC<DonatieModalProps> = ({ isOpen, onClose }) => {
+  return (
+    <Dialog open={isOpen} onClose={onClose} className="relative z-50">
+      <div className="fixed inset-0 bg-black/70 backdrop-blur-sm flex justify-center items-center p-1 xs:p-2 sm:p-4 overflow-hidden z-[60]" onClick={onClose}>
+        <div className="bg-white rounded-lg xs:rounded-xl sm:rounded-2xl w-full max-w-[calc(100%-0.5rem)] xs:max-w-[calc(100%-1rem)] sm:max-w-xl relative shadow-2xl overflow-hidden animate-slideIn mx-1 xs:mx-2 sm:mx-auto" onClick={(e) => e.stopPropagation()}>
+          <div className="relative">
+            <div className="bg-primary p-6 flex items-center justify-between">
+              <h2 className="text-xl font-bold text-white">
+                Doneren
+              </h2>
+              <button 
+                onClick={onClose}
+                className="text-white hover:bg-white/10 p-2 rounded-full transition-colors"
+                aria-label="Sluiten"
+              >
+                <CloseIcon />
+              </button>
+            </div>
+
+            <div className="p-6">
+              <div className="flex justify-center mb-6">
+                <FavoriteIcon className="text-primary" sx={{ fontSize: 64 }} />
+              </div>
+              <p className="text-gray-600 mb-4 text-center">
+                Doneren voor De Koninklijke Loop 2025 starten vanaf 15 januari 2025.
+              </p>
+              <p className="text-gray-600 text-center">
+                Wil je op de hoogte blijven? Volg ons dan op social media of neem contact met ons op.
+              </p>
+            </div>
+
+            <div className="p-6 bg-gray-50 border-t border-gray-100">
+              <Link
+                to="/faq"
+                onClick={onClose}
+                className="flex items-center justify-center gap-2 w-full bg-primary hover:bg-primary-dark text-white px-6 py-3 rounded-full font-medium transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg"
+              >
+                <span>Contact opnemen</span>
+                <ArrowForwardIcon />
+              </Link>
+            </div>
+
+            <div className="space-y-6 p-6">
+              <Link 
+                to="/wat-is-de-koninklijkeloop"
+                className="block p-4 bg-white rounded-xl hover:bg-gray-50 transition-colors"
+                onClick={onClose}
+              >
+                <h3 className="text-lg font-semibold mb-2">Over het goede doel</h3>
+                <p className="text-gray-600">Lees meer over waar we voor lopen.</p>
+              </Link>
+
+              <Link 
+                to="/faq"
+                className="block p-4 bg-white rounded-xl hover:bg-gray-50 transition-colors"
+                onClick={onClose}
+              >
+                <h3 className="text-lg font-semibold mb-2">Vragen over doneren?</h3>
+                <p className="text-gray-600">Bekijk onze FAQ of neem contact op.</p>
+              </Link>
+            </div>
+          </div>
+        </div>
+      </div>
+    </Dialog>
+  );
+}; 
+
+
+=== File 35/64: src\components\modals\InschrijfModal.tsx ===
+
+import React from 'react';
+import { Dialog } from '@headlessui/react';
+import { Link } from 'react-router-dom';
+import CloseIcon from '@mui/icons-material/Close';
+import InfoIcon from '@mui/icons-material/Info';
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+
+interface InschrijfModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+}
+
+export const InschrijfModal: React.FC<InschrijfModalProps> = ({ isOpen, onClose }) => {
+  return (
+    <Dialog open={isOpen} onClose={onClose} className="relative z-50">
+      <div className="fixed inset-0 bg-black/70 backdrop-blur-sm flex justify-center items-center p-1 xs:p-2 sm:p-4 overflow-hidden z-[100]" onClick={onClose}>
+        <div className="bg-white rounded-lg xs:rounded-xl sm:rounded-2xl w-full max-w-[calc(100%-0.5rem)] xs:max-w-[calc(100%-1rem)] sm:max-w-xl relative shadow-2xl overflow-hidden animate-slideIn mx-1 xs:mx-2 sm:mx-auto" onClick={(e) => e.stopPropagation()}>
+          <div className="relative">
+            <div className="bg-primary p-6 flex items-center justify-between">
+              <h2 className="text-xl font-bold text-white">
+                Inschrijving 2025
+              </h2>
+              <button onClick={onClose} className="text-white hover:bg-white/10 p-2 rounded-full transition-colors" aria-label="Sluiten">
+                <CloseIcon />
+              </button>
+            </div>
+
+            <div className="p-6">
+              <div className="flex justify-center mb-6">
+                <InfoIcon className="text-primary" sx={{ fontSize: 64 }} />
+              </div>
+              <p className="text-gray-600 mb-4 text-center">
+                De inschrijvingen voor De Koninklijke Loop 2025 starten vanaf 15 januari 2025.
+              </p>
+              <p className="text-gray-600 text-center">
+                Wil je op de hoogte blijven? Volg ons dan op social media of neem contact met ons op.
+              </p>
+            </div>
+
+            <div className="p-6 bg-gray-50 border-t border-gray-100">
+              <Link 
+                to="/faq"
+                onClick={onClose}
+                className="flex items-center justify-center gap-2 w-full bg-primary hover:bg-primary-dark text-white px-6 py-3 rounded-full font-medium transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg"
+              >
+                <span>Contact opnemen</span>
+                <ArrowForwardIcon />
+              </Link>
+            </div>
+
+            <div className="space-y-6">
+              <Link 
+                to="/wat-is-de-koninklijkeloop"
+                className="block p-4 bg-white rounded-xl hover:bg-gray-50 transition-colors"
+                onClick={onClose}
+              >
+                <h3 className="text-lg font-semibold mb-2">Wat is De Koninklijke Loop?</h3>
+                <p className="text-gray-600">Lees meer over het evenement en onze missie.</p>
+              </Link>
+
+              <Link 
+                to="/over-ons"
+                className="block p-4 bg-white rounded-xl hover:bg-gray-50 transition-colors"
+                onClick={onClose}
+              >
+                <h3 className="text-lg font-semibold mb-2">Over Ons</h3>
+                <p className="text-gray-600">Leer meer over onze organisatie en team.</p>
+              </Link>
+
+              <Link 
+                to="/faq"
+                className="block p-4 bg-white rounded-xl hover:bg-gray-50 transition-colors"
+                onClick={onClose}
+              >
+                <h3 className="text-lg font-semibold mb-2">Contact & FAQ</h3>
+                <p className="text-gray-600">Heb je vragen? Bekijk onze FAQ of neem contact op.</p>
+              </Link>
+            </div>
+          </div>
+        </div>
+      </div>
+    </Dialog>
+  );
+}; 
+
+
+=== File 36/64: src\components\modals\PartnerModal.tsx ===
+
+import React from 'react';
+import { Partner } from '@/types';
+import CloseIcon from '@mui/icons-material/Close';
+
+interface PartnerModalProps {
+  partner: Partner | null;
+  onClose: () => void;
+}
+
+const PartnerModal: React.FC<PartnerModalProps> = ({ partner, onClose }) => {
+  if (!partner) return null;
+
+  return (
+    <div 
+      className="fixed inset-0 bg-black/70 backdrop-blur-sm flex justify-center items-center p-1 xs:p-2 sm:p-4 overflow-hidden z-[100]"
+      onClick={onClose}
+    >
+      <div 
+        className="bg-white rounded-lg xs:rounded-xl sm:rounded-2xl w-full max-w-[calc(100%-0.5rem)] xs:max-w-[calc(100%-1rem)] sm:max-w-xl relative shadow-2xl overflow-hidden animate-slideIn mx-1 xs:mx-2 sm:mx-auto"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <button
+          className="absolute top-2 right-2 z-10 w-8 h-8 flex items-center justify-center rounded-full bg-white/10 hover:bg-white/20 text-white transition-all duration-300 hover:rotate-90"
+          onClick={onClose}
+          aria-label="Sluiten"
+        >
+          <CloseIcon />
+        </button>
+
+        <div className="relative bg-primary p-6 sm:p-10 flex justify-center items-center">
+          <div className="absolute inset-0 opacity-10 bg-pattern"></div>
+          <img
+            src={partner.logo}
+            alt={`${partner.name} Logo`}
+            className="w-32 sm:w-48 h-auto object-contain relative z-1"
+          />
+        </div>
+
+        <div className="p-6">
+          <div className="text-center mb-6">
+            <span className="inline-block bg-primary/10 text-primary px-3 py-1.5 rounded-full text-sm font-medium mb-2">
+              Partner sinds {partner.since}
+            </span>
+            <h3 className="text-xl sm:text-2xl font-bold text-gray-900">
+              {partner.name}
+            </h3>
+          </div>
+          <p className="text-gray-600 text-sm sm:text-base leading-relaxed">
+            {partner.description}
+          </p>
+        </div>
+
+        <div className="p-6 bg-gray-50 border-t border-gray-100">
+          <a
+            href={partner.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center justify-center gap-2 w-full bg-primary hover:bg-primary-dark text-white px-6 py-3 rounded-full font-medium transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg"
+          >
+            <span>Bezoek website</span>
+            <svg 
+              className="w-5 h-5" 
+              fill="none" 
+              stroke="currentColor" 
+              viewBox="0 0 24 24"
+            >
+              <path 
+                strokeLinecap="round" 
+                strokeLinejoin="round" 
+                strokeWidth="2" 
+                d="M14 5l7 7m0 0l-7 7m7-7H3"
+              />
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default PartnerModal; 
+
+
+=== File 37/64: src\components\modals\PrivacyModal.tsx ===
+
+import React from 'react';
+import { FaTimes } from 'react-icons/fa';
+
+interface PrivacyModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+}
+
+const PrivacyModal: React.FC<PrivacyModalProps> = ({ isOpen, onClose }) => {
+  if (!isOpen) return null;
+
+  return (
+    <div className="fixed inset-0 z-50 overflow-y-auto bg-black bg-opacity-50 flex items-center justify-center p-4">
+      <div className="relative bg-white rounded-2xl max-w-3xl w-full max-h-[90vh] overflow-hidden">
+        {/* Header */}
+        <div className="sticky top-0 bg-gradient-to-r from-primary to-primary-dark text-white px-6 py-4 flex items-center justify-between">
+          <h2 className="text-xl font-semibold">Privacybeleid</h2>
+          <button
+            onClick={onClose}
+            className="p-1 hover:bg-white/10 rounded-full transition-colors"
+            aria-label="Sluit privacybeleid"
+          >
+            <FaTimes size={24} />
+          </button>
+        </div>
+
+        {/* Content */}
+        <div className="p-6 overflow-y-auto">
+          <div className="prose prose-lg max-w-none">
+            {/* Privacy content hier */}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default PrivacyModal; 
+
+
+=== File 38/64: src\components\modals\TermsModal.tsx ===
+
+import React from 'react';
+import { Dialog } from '@headlessui/react';
+import CloseIcon from '@mui/icons-material/Close';
+import GavelIcon from '@mui/icons-material/Gavel';
+import GroupIcon from '@mui/icons-material/Group';
+import DirectionsRunIcon from '@mui/icons-material/DirectionsRun';
+import SecurityIcon from '@mui/icons-material/Security';
+import BackpackIcon from '@mui/icons-material/Backpack';
+import PrivacyTipIcon from '@mui/icons-material/PrivacyTip';
+import BalanceIcon from '@mui/icons-material/Balance';
+import RuleIcon from '@mui/icons-material/Rule';
+import ArticleIcon from '@mui/icons-material/Article';
+
+interface TermsModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  onScrollComplete?: () => void;
+}
+
+export const TermsModal: React.FC<TermsModalProps> = ({ isOpen, onClose, onScrollComplete }) => {
+  const hasTriggeredRef = React.useRef(false);
+
+  const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
+    const element = e.currentTarget;
+    
+    const scrollOffset = 50;
+    const isAtBottom = 
+      element.scrollHeight - element.clientHeight - element.scrollTop <= scrollOffset;
+
+    if (isAtBottom && !hasTriggeredRef.current && onScrollComplete) {
+      hasTriggeredRef.current = true;
+      onScrollComplete();
+    }
+  };
+
+  React.useEffect(() => {
+    if (isOpen) {
+      hasTriggeredRef.current = false;
+    }
+  }, [isOpen]);
+
+  return (
+    <Dialog open={isOpen} onClose={onClose} className="relative z-50">
+      <div className="fixed inset-0 bg-black/30 backdrop-blur-sm animate-fade-in" aria-hidden="true" />
+      
+      <div className="fixed inset-0 flex items-center justify-center p-4">
+        <Dialog.Panel 
+          className="w-full max-w-4xl max-h-[90vh] overflow-y-auto bg-white rounded-xl shadow-xl animate-slide-up"
+          onScroll={handleScroll}
+        >
+          {/* Header */}
+          <div className="sticky top-0 bg-white px-6 py-4 border-b border-gray-200 flex justify-between items-center z-10">
+            <div className="flex items-center gap-3">
+              <GavelIcon className="text-primary text-3xl" />
+              <Dialog.Title className="text-2xl font-bold text-gray-900">
+                Algemene Voorwaarden
+              </Dialog.Title>
+            </div>
+            <button
+              onClick={onClose}
+              className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+              aria-label="Sluiten"
+            >
+              <CloseIcon />
+            </button>
+          </div>
+
+          {/* Content */}
+          <div className="px-6 py-8">
+            <div className="prose prose-lg max-w-none">
+              <p className="text-xl font-bold text-primary text-center mb-8">
+                Koninklijke loop 17 mei 2025
+              </p>
+
+              <section className="mb-8">
+                <div className="flex items-center gap-3 mb-4">
+                  <GroupIcon className="text-primary text-3xl" />
+                  <h2 className="text-2xl font-bold m-0">Artikel 1: Definities</h2>
+                </div>
+                <div className="pl-9">
+                  <p><strong>1.1 Organisatoren:</strong> De organisatoren betrokken bij het organiseren van de Sponsorloop; Koninklijke loop 17 mei 2025.</p>
+                  <p><strong>1.2 Deelnemer:</strong> De natuurlijke persoon (m/v/o), niet handelend als ondernemer, die zich op een door de Organisator toegelaten wijze heeft ingeschreven voor deelname aan de Sponsorloop.</p>
+                  <p><strong>1.3 Evenement:</strong> Sponsorloop die door de Organisatoren wordt georganiseerd op 17 mei 2025.</p>
+                  <p><strong>1.4 Overeenkomst:</strong> De overeenkomst strekkende tot deelname van de deelnemer aan het Evenement.</p>
+                </div>
+              </section>
+
+              <section className="mb-8">
+                <div className="flex items-center gap-3 mb-4">
+                  <DirectionsRunIcon className="text-primary text-3xl" />
+                  <h2 className="text-2xl font-bold m-0">Artikel 2: Deelname</h2>
+                </div>
+                <div className="pl-9">
+                  <p><strong>2.1</strong> Deelname aan het Evenement is uitsluitend mogelijk door een natuurlijk persoon wanneer deze of de gezaghebbende van de deelnemer het daartoe strekkende inschrijvingsformulier volledig en naar waarheid heeft ingevuld. Met de inschrijving heeft de deelnemer danwel gezaghebbende ingestemd met deze algemene voorwaarden. De Organisatoren behouden zich het recht om te allen tijde inschrijvingen van Deelnemers met vals ingevulde persoonlijke gegevens te annuleren en te verwijderen.</p>
+                  <p><strong>2.2</strong> Deelname staat alleen open voor natuurlijke personen. Het is Deelnemers niet toegestaan zich te laten begeleiden door een of meer personen op een fiets of ander vervoersmiddel tenzij met uitdrukkelijke schriftelijke toestemming van de Organisatoren. Het is niet toegestaan honden (al dan niet aangelijnd) mee deel te laten nemen aan het Evenement.</p>
+                  <p><strong>2.3</strong> De deelname aan het Evenement geschiedt door de Deelnemer persoonlijk. Het is niet toegestaan een ander in de plaats van de Deelnemer te laten deelnemen.</p>
+                  <p><strong>2.6</strong> Indien het Evenement door uitzonderlijke omstandigheden of vanwege overmacht (bijvoorbeeld ongevallen, storm, aanslagen, pandemie et cetera) niet kan doorgaan, vindt geen restitutie plaats van het donatiegeld.</p>
+                  <p><strong>2.7</strong> De wedstrijdleiding heeft het recht een Deelnemer te diskwalificeren en tot de deelname van het Evenement te ontzetten. Ook de medische staf heeft het recht een Deelnemer (verdere) deelname aan het Evenement te ontzeggen.</p>
+                  <p><strong>2.8</strong> De Organisatoren kunnen gedurende het Evenement op grond van uitzonderlijke omstandigheden of vanwege overmacht besluiten het Evenement voortijdig te beëindigen, op te schorten of neutraliseren. Ook kunnen de Organisatoren op grond van uitzonderlijke omstandigheden gedurende het Evenement besluiten de te lopen route of af te leggen afstand te wijzigen. In bedoelde gevallen vindt geen restitutie plaats van het gedoneerde geld.</p>
+                  <p><strong>2.9</strong> Een besluit van de Organisatoren om het Evenement geen doorgang te laten vinden doet geen aansprakelijkheid ontstaan voor vergoeding van eventuele door de Deelnemers gemaakte kosten.</p>
+                </div>
+              </section>
+
+              <section className="mb-8">
+                <div className="flex items-center gap-3 mb-4">
+                  <SecurityIcon className="text-primary text-3xl" />
+                  <h2 className="text-2xl font-bold m-0">Artikel 3: Aansprakelijkheid</h2>
+                </div>
+                <div className="pl-9">
+                  <p><strong>3.1</strong> De Deelnemer of Gezaghebbende over Deelnemer verklaart zich bekend met het feit dat deelname aan het Evenement een voldoende goede gezondheid in fysieke en psychische zin vereist. Tevens verklaart de Deelnemer dat hij/zij aan deze eis voldoet en dat hij/zij zich door training en anderszins voldoende heeft voorbereid op het Evenement.</p>
+                  <p><strong>3.2</strong> Deelname geschiedt op eigen risico. De Organisatoren zijn niet aansprakelijk voor enige schade, hoe ook genaamd, die de Deelnemer mocht lijden als gevolg van deelname, tenzij deze schade het directe gevolg is van aan de Organisator toe te rekenen opzet, grove schuld of nalatigheid. Deze uitsluiting van aansprakelijkheid geldt ook voor ernstige schadesoorten zoals mogelijke schadesoorten ten gevolge van letsel en overlijden.</p>
+                  <p><strong>3.3</strong> Indien – ondanks het bepaald in het eerste lid van dit artikel – aansprakelijkheid van de Organisatoren voor schade van de Deelnemer moet worden aangenomen, blijft de verplichting van Organisatoren tot vergoeding van die schade beperkt tot ten hoogste het bedrag dat de verzekeraar van de Organisatoren ter zake van die schade uitkeert.</p>
+                  <p><strong>3.4</strong> De Deelnemer dient voldoende verzekerd te zijn tegen het risico van schade die hij/zij of een nabestaande mocht lijden ten gevolge van zijn of haar overlijden, letsel of ziekte als gevolg van deelname aan het Evenement. De Deelnemer vrijwaart de Organisatoren voor schade die derden mochten lijden als gevolg van een aan de Deelnemer toe te rekenen handelen of nalaten van handelen met betrekking tot het Evenement. De Deelnemer dient voldoende verzekerd te zijn tegen het risico van aansprakelijkheid voor bedoelde schade.</p>
+                </div>
+              </section>
+
+              <section className="mb-8">
+                <div className="flex items-center gap-3 mb-4">
+                  <BackpackIcon className="text-primary text-3xl" />
+                  <h2 className="text-2xl font-bold m-0">Artikel 4: Persoonlijke eigendommen</h2>
+                </div>
+                <div className="pl-9">
+                  <p><strong>4.1</strong> Indien de Organisatoren gedurende het Evenement zaken van de Deelnemer voor hem/haar bewaart of indien een Deelnemer – al dan niet met instemming van de Organisatoren – zaken achterlaat in een al dan niet door de Organisatie beheerde ruimte, zijn de Organisatoren niet aansprakelijk voor schade die ontstaat door verlies, diefstal, vermissing of beschadiging enzovoort van die zaken.</p>
+                </div>
+              </section>
+
+              <section className="mb-8">
+                <div className="flex items-center gap-3 mb-4">
+                  <PrivacyTipIcon className="text-primary text-3xl" />
+                  <h2 className="text-2xl font-bold m-0">Artikel 5: Privacy</h2>
+                </div>
+                <div className="pl-9">
+                  <p><strong>5.1</strong> Bij inschrijving verleent de Deelnemer toestemming aan de Organisatoren en haar partners voor openbaarmaking van tijdens of rond het Evenement gemaakte foto's, audio- en videomateriaal en dergelijke, waarop de Deelnemer zichtbaar of hoorbaar is.</p>
+                  <p><strong>5.2</strong> De door de Deelnemer verstrekte persoonsgegevens worden opgenomen in een bestand. De Deelnemer verleent door het aangaan van de overeenkomst toestemming aan de Organisatoren tot gebruik van de persoonsgegevens voor doeleinden zoals beschreven in de Privacyverklaring van de Organisatoren.</p>
+                  <p><strong>5.3</strong> Vanaf 25 mei 2018 gelden nieuwe Europese privacy-regels van de General Data Protection Regulation (GDPR), in het Nederlands de Algemene verordening gegevensbescherming (AVG). Organisator respecteert deze privacy-regels en handelt conform deze wetgeving. Op dit punt maken de meest recente versies van de Privacyverklaring van de Organisatoren integraal deel uit van deze Algemene Voorwaarden.</p>
+                </div>
+              </section>
+
+              <section className="mb-8">
+                <div className="flex items-center gap-3 mb-4">
+                  <BalanceIcon className="text-primary text-3xl" />
+                  <h2 className="text-2xl font-bold m-0">Artikel 6: Geschillenregeling</h2>
+                </div>
+                <div className="pl-9">
+                  <p><strong>6.1</strong> Geschillen tussen Deelnemer en Organisatoren worden – met uitsluiting van de burgerlijke rechter – door arbitrage beslecht overeenkomstig het arbitrage reglement van het Nederlands Arbitrage Instituut. Er is sprake van een geschil indien een van beide partijen verklaart dat dit het geval is. Op de Overeenkomst, deze Algemene Voorwaarden en alle rechtsbetrekkingen die tussen de Organisatoren en de Deelnemer mochten ontstaan, is uitsluitend Nederlands recht van toepassing.</p>
+                </div>
+              </section>
+
+              <section className="mb-8">
+                <div className="flex items-center gap-3 mb-4">
+                  <RuleIcon className="text-primary text-3xl" />
+                  <h2 className="text-2xl font-bold m-0">Artikel 7: Algemene gedragsregels</h2>
+                </div>
+                <div className="pl-9">
+                  <p><strong>7.1</strong> Instructie van politie, organisatie, Evenement begeleiding en medewerkers moeten direct en stipt worden opgevolgd. Ook dienen Deelnemers de aangegeven aanlooproute te volgen. Het niet opvolgen van de instructies kan diskwalificatie tot gevolg hebben.</p>
+                  <p><strong>7.2</strong> De Wegenverkeerswet en het reglement 'Verkeersregels en Verkeerstekens' blijven tijdens de loop onverkort van kracht, tenzij uitdrukkelijk anders aangegeven is in die situaties waarin aan de Organisatoren ontheffing verleend is.</p>
+                  <p><strong>7.3</strong> In het start/finishgebied, langs het parcours en op de route naar het start-finishgebied geldt een algeheel verbod op flyeren, sampling en andere promotionele activiteiten anders dan door de stichting expliciet en voorafgaand aan het Evenement toegezegd.</p>
+                  <p><strong>7.4</strong> Van iedere Deelnemer wordt verwacht geen schade toe te brengen aan de natuur of aan andermans eigendommen en geen afval achter te laten.</p>
+                </div>
+              </section>
+
+              <section className="mb-8">
+                <div className="flex items-center gap-3 mb-4">
+                  <ArticleIcon className="text-primary text-3xl" />
+                  <h2 className="text-2xl font-bold m-0">Artikel 8: Slotbepaling</h2>
+                </div>
+                <div className="pl-9">
+                  <p><strong>8.1</strong> Indien een of enkele artikelen van deze voorwaarden nietig of onwettig zouden zijn, om welke reden dan ook, doet dit geen afbreuk aan de geldigheid van de andere onderdelen van de voorwaarden.</p>
+                </div>
+              </section>
+            </div>
+          </div>
+
+          {/* Footer */}
+          <div className="sticky bottom-0 bg-white px-6 py-4 border-t border-gray-200 flex justify-end">
+            <button
+              onClick={onClose}
+              className="flex items-center justify-center gap-2 px-8 py-3 bg-primary hover:bg-primary-dark text-white font-semibold rounded-full transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg min-w-[160px]"
+            >
+              Sluiten
+            </button>
+          </div>
+        </Dialog.Panel>
+      </div>
+    </Dialog>
+  );
+}; 
+
+
+=== File 39/64: src\components\navbar\index.tsx ===
+
+import React from 'react';
+import { Link } from 'react-router-dom';
+
+interface NavbarProps {
+  onInschrijfClick: () => void;
+}
+
+const Navbar: React.FC<NavbarProps> = ({ onInschrijfClick }) => {
+  return (
+    <nav className="bg-white shadow-lg">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between h-16">
+          <div className="flex items-center">
+            <Link to="/" className="flex-shrink-0">
+              <img className="h-8 w-auto" src="/logo.png" alt="DKL Logo" />
+            </Link>
+            <div className="hidden md:ml-6 md:flex md:space-x-8">
+              <Link to="/wat-is-de-koninklijkeloop" className="text-gray-500 hover:text-gray-700 px-3 py-2 rounded-md text-sm font-medium">
+                Wat is de KoninklijkeLoop
+              </Link>
+              <Link to="/over-ons" className="text-gray-500 hover:text-gray-700 px-3 py-2 rounded-md text-sm font-medium">
+                Over Ons
+              </Link>
+              <Link to="/faq" className="text-gray-500 hover:text-gray-700 px-3 py-2 rounded-md text-sm font-medium">
+                FAQ
+              </Link>
+              <Link to="/admin" className="text-gray-500 hover:text-gray-700 px-3 py-2 rounded-md text-sm font-medium">
+                Admin
+              </Link>
+            </div>
+          </div>
+          <div className="flex items-center">
+            <button
+              onClick={onInschrijfClick}
+              className="bg-primary text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-primary-dark"
+            >
+              Inschrijven
+            </button>
+          </div>
+        </div>
+      </div>
+    </nav>
+  );
+};
+
+export default Navbar; 
+
+
+=== File 40/64: src\components\navbar\Navbar.tsx ===
+
+import React, { useState } from 'react';
+import { IconName, ICONS } from '../icons';
+import MenuIcon from '@mui/icons-material/Menu';
+import CloseIcon from '@mui/icons-material/Close';
+import { Link } from 'react-router-dom';
+
+interface NavItemProps {
+  to?: string;
+  icon: IconName;
+  children: React.ReactNode;
+  onClick?: () => void;
+}
+
+interface SocialLinkProps {
+  href: string;
+  icon: IconName;
+}
+
+interface NavbarProps {
+  onInschrijfClick: () => void;
+}
+
+const Navbar: React.FC<NavbarProps> = ({ onInschrijfClick }) => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+
+  return (
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-primary shadow-lg h-16" aria-label="Hoofdnavigatie">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between h-16">
+          {/* Logo */}
+          <div className="flex-shrink-0">
+            <Link to="/" className="block relative" aria-label="Home">
+              <img 
+                src="https://res.cloudinary.com/dgfuv7wif/image/upload/v1733267882/664b8c1e593a1e81556b4238_0760849fb8_yn6vdm.png" 
+                alt="Logo" 
+                className="h-12 w-auto"
+              />
+            </Link>
+          </div>
+
+          {/* Desktop Navigation */}
+          <div className="hidden lg:flex lg:items-center lg:justify-center lg:flex-1">
+            <ul className="flex items-center space-x-8">
+              <NavItem to="/" icon="home">Home</NavItem>
+              <NavItem icon="register" onClick={onInschrijfClick}>Inschrijven</NavItem>
+              <NavItem to="/over-ons" icon="about">Over Ons</NavItem>
+              <NavItem to="/faq" icon="contact">Contact</NavItem>
+              <NavItem to="/wat-is-de-koninklijkeloop" icon="info">DKL</NavItem>
+            </ul>
+          </div>
+
+          {/* Mobile menu button */}
+          <button 
+            className="lg:hidden p-2 rounded-md text-white hover:bg-primary-dark transition-colors"
+            onClick={toggleMenu}
+            aria-expanded={isMenuOpen}
+            aria-controls="mobile-menu"
+            aria-label="Menu openen"
+          >
+            <MenuIcon sx={{ fontSize: 24 }} />
+          </button>
+        </div>
+      </div>
+
+      {/* Mobile menu */}
+      <div 
+        className={`lg:hidden fixed inset-0 z-50 bg-primary transform transition-transform duration-300 ease-in-out ${
+          isMenuOpen ? 'translate-x-0' : 'translate-x-full'
+        }`}
+        id="mobile-menu"
+      >
+        <div className="p-4">
+          <div className="flex items-center justify-between mb-8">
+            <Link to="/" className="block" aria-label="Home">
+              <img 
+                src="https://res.cloudinary.com/dgfuv7wif/image/upload/v1733267882/664b8c1e593a1e81556b4238_0760849fb8_yn6vdm.png" 
+                alt="Logo" 
+                className="h-12 w-auto"
+              />
+            </Link>
+            <button 
+              className="p-2 text-white hover:bg-primary-dark rounded-full transition-colors"
+              onClick={toggleMenu}
+              aria-label="Menu sluiten"
+            >
+              <CloseIcon sx={{ fontSize: 24 }} />
+            </button>
+          </div>
+          
+          <ul className="space-y-4 text-center">
+            <NavItem to="/" icon="home">Home</NavItem>
+            <NavItem icon="register" onClick={onInschrijfClick}>Inschrijven</NavItem>
+            <NavItem to="/over-ons" icon="about">Over Ons</NavItem>
+            <NavItem to="/faq" icon="contact">Contact</NavItem>
+            <NavItem to="/wat-is-de-koninklijkeloop" icon="info">DKL</NavItem>
+          </ul>
+
+          <div className="mt-8 pt-6 border-t border-white/20 text-center">
+            <p className="text-sm text-white/90 font-medium mb-4">Volg ons</p>
+            <div className="flex justify-center space-x-4">
+              <SocialLink href="https://www.facebook.com/p/De-Koninklijke-Loop-61556315443279/" icon="facebook" />
+              <SocialLink href="https://www.instagram.com/koninklijkeloop/" icon="instagram" />
+              <SocialLink href="https://www.youtube.com/@DeKoninklijkeLoop" icon="youtube" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+  );
+};
+
+const NavItem: React.FC<NavItemProps> = ({ to, icon, children, onClick }) => (
+  <li>
+    {onClick ? (
+      <button
+        onClick={onClick}
+        className="flex items-center justify-center gap-2 px-4 py-2 text-white hover:bg-primary-dark rounded-lg transition-colors w-full"
+      >
+        <NavIcon name={icon} />
+        <span className="font-medium">{children}</span>
+      </button>
+    ) : (
+      <Link
+        to={to || '/'}
+        className="flex items-center justify-center gap-2 px-4 py-2 text-white hover:bg-primary-dark rounded-lg transition-colors w-full"
+      >
+        <NavIcon name={icon} />
+        <span className="font-medium">{children}</span>
+      </Link>
+    )}
+  </li>
+);
+
+const SocialLink: React.FC<SocialLinkProps> = ({ href, icon }) => (
+  <a
+    href={href}
+    target="_blank"
+    rel="noopener noreferrer"
+    className="w-10 h-10 flex items-center justify-center rounded-full bg-white/10 text-white hover:bg-white/20 transition-colors"
+  >
+    <NavIcon name={icon} />
+  </a>
+);
+
+const NavIcon: React.FC<{ name: IconName; size?: number }> = ({ name, size = 20 }) => {
+  const Icon = ICONS[name];
+  return <Icon sx={{ fontSize: size }} />;
+};
+
+export default Navbar;
+
+
+
+=== File 41/64: src\components\partners\PartnerCarrousel.tsx ===
+
+import React, { useState, useEffect, useRef } from 'react';
+import { Partner } from '@/types/api.types';
+
+const partners: Omit<Partner, 'createdAt' | 'updatedAt'>[] = [
+  {
+    id: 'liliane',
+    name: 'Liliane Fonds',
+    logo: 'https://res.cloudinary.com/dgfuv7wif/image/upload/v1733166642/LogoLayout_busfsf.webp',
+    website: 'https://www.lilianefonds.nl',
+    description: 'Samen maken wij ons sterk voor kinderen en jongeren met een handicap in ontwikkelingslanden.',
+    tier: 'gold',
+    since: '2024'
+  },
+  {
+    id: 'grotekerk',
+    name: 'Grote Kerk Apeldoorn',
+    logo: 'https://res.cloudinary.com/dgfuv7wif/image/upload/v1733489418/GroteKerk_1_gldtlw.webp',
+    website: 'https://www.grotekerkapeldoorn.nl',
+    description: 'Sinds 2024 een trouwe partner. De kerk stelt haar locatie beschikbaar.',
+    tier: 'silver',
+    since: '2024'
+  },
+  {
+    id: 'apeldoorn',
+    name: 'Gemeente Apeldoorn',
+    logo: 'https://res.cloudinary.com/dgfuv7wif/image/upload/v1733166642/asdasdqwdr_rvqey8.webp',
+    website: 'https://www.apeldoorn.nl',
+    description: 'Ondersteunt ons sinds 2024 bij het mogelijk maken van inclusieve wandelactiviteit in de regio. Samen maken we Apeldoorn toegankelijker voor iedereen.',
+    tier: 'bronze',
+    since: '2024'
+  },
+  {
+    id: 'heerenloo',
+    name: "'s Heeren Loo",
+    logo: 'https://res.cloudinary.com/dgfuv7wif/image/upload/v1733166641/sqcqweq_ncn3om.webp',
+    website: 'https://www.sheerenloo.nl',
+    description: "Strategische partner sinds 2024. Samen werken we met bewoners van 's Heeren Loo aan dit evenement, waarbij inclusiviteit en participatie centraal staan.",
+    tier: 'bronze',
+    since: '2024'
+  }
+];
+
+const PartnerCarrousel: React.FC = () => {
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const [isSmallScreen, setIsSmallScreen] = useState(false);
+
+  useEffect(() => {
+    const checkScreenSize = () => {
+      setIsSmallScreen(window.innerWidth < 640);
+    };
+
+    checkScreenSize();
+    window.addEventListener('resize', checkScreenSize);
+    return () => window.removeEventListener('resize', checkScreenSize);
+  }, []);
+
+  useEffect(() => {
+    if (!isSmallScreen || !scrollRef.current) return;
+
+    const scrollContainer = scrollRef.current;
+    let scrollInterval: ReturnType<typeof setInterval>;
+
+    const startAutoScroll = () => {
+      scrollInterval = setInterval(() => {
+        if (scrollContainer.scrollLeft + scrollContainer.clientWidth >= scrollContainer.scrollWidth) {
+          scrollContainer.scrollLeft = 0;
+        } else {
+          scrollContainer.scrollLeft += 1;
+        }
+      }, 30);
+    };
+
+    startAutoScroll();
+
+    const stopScroll = () => clearInterval(scrollInterval);
+    const resumeScroll = () => {
+      stopScroll();
+      startAutoScroll();
+    };
+
+    scrollContainer.addEventListener('mouseenter', stopScroll);
+    scrollContainer.addEventListener('mouseleave', resumeScroll);
+    scrollContainer.addEventListener('touchstart', stopScroll);
+    scrollContainer.addEventListener('touchend', resumeScroll);
+
+    return () => {
+      clearInterval(scrollInterval);
+      scrollContainer.removeEventListener('mouseenter', stopScroll);
+      scrollContainer.removeEventListener('mouseleave', resumeScroll);
+      scrollContainer.removeEventListener('touchstart', stopScroll);
+      scrollContainer.removeEventListener('touchend', resumeScroll);
+    };
+  }, [isSmallScreen]);
+
+  const displayPartners = isSmallScreen ? [...partners, ...partners] : partners;
+
+  return (
+    <div className="w-full px-2 xs:px-4 sm:px-5 py-4 bg-white mt-16" aria-label="Partners Overview">
+      <div 
+        ref={scrollRef}
+        className="flex items-center gap-4 xs:gap-6 sm:gap-8 mx-auto max-w-6xl overflow-x-auto scrollbar-hide scroll-smooth"
+        style={{
+          justifyContent: isSmallScreen ? 'flex-start' : 'center'
+        }}
+      >
+        {displayPartners.map((partner, index) => (
+          <a
+            key={`${partner.id}-${index}`}
+            href={partner.website}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex-none w-24 xs:w-32 sm:w-36 md:w-40 bg-transparent border-none p-1 xs:p-2 transition-all duration-300 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded-lg"
+            aria-label={`Bezoek ${partner.name} website`}
+          >
+            <img
+              src={partner.logo}
+              alt={`${partner.name} Logo`}
+              loading="lazy"
+              className="w-full h-auto transition-transform duration-300"
+              width="160"
+              height="80"
+            />
+          </a>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+export default PartnerCarrousel;
+
+
+
+=== File 42/64: src\components\registration\RadioCard.tsx ===
+
+import React from 'react';
+
+interface RadioCardProps {
+  /** Name attribute for the radio input */
+  name: string;
+  /** Value of the radio option */
+  value: string;
+  /** Whether this option is currently selected */
+  checked: boolean;
+  /** Handler for when the option is selected */
+  onChange: (value: string) => void;
+  /** Title text to display */
+  title: string;
+  /** Description text to display */
+  description: string;
+  /** Optional icon to display */
+  icon?: React.ReactNode;
+  /** Additional CSS classes */
+  className?: string;
+}
+
+export const RadioCard: React.FC<RadioCardProps> = ({
+  name,
+  value,
+  checked,
+  onChange,
+  title,
+  description,
+  icon,
+  className = ''
+}) => {
+  return (
+    <label
+      className={`
+        relative block p-6 rounded-xl border-2 cursor-pointer
+        transition-all duration-200
+        ${checked 
+          ? 'border-primary bg-primary/5 shadow-md' 
+          : 'border-gray-200 hover:border-gray-300 hover:bg-gray-50'}
+        ${className}
+      `}
+      role="radio"
+      aria-checked={checked}
+      tabIndex={0}
+      onKeyPress={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          onChange(value);
+        }
+      }}
+    >
+      <input
+        type="radio"
+        name={name}
+        value={value}
+        checked={checked}
+        onChange={(e) => onChange(e.target.value)}
+        className="sr-only"
+      />
+      
+      <div className="flex items-start gap-4">
+        {icon && (
+          <div className="flex-shrink-0 text-2xl">
+            {icon}
+          </div>
+        )}
+        <div>
+          <div className="font-medium text-gray-900">
+            {title}
+          </div>
+          <div className="mt-1 text-sm text-gray-500">
+            {description}
+          </div>
+        </div>
+      </div>
+
+      <div 
+        className={`
+          absolute top-4 right-4 w-4 h-4 rounded-full border-2
+          transition-colors duration-200
+          ${checked 
+            ? 'border-primary bg-primary' 
+            : 'border-gray-300 bg-white'}
+        `}
+      >
+        <div 
+          className={`
+            absolute inset-1 rounded-full bg-white
+            transform transition-transform duration-200
+            ${checked ? 'scale-100' : 'scale-0'}
+          `}
+        />
+      </div>
+    </label>
+  );
+};
+
+
+=== File 43/64: src\components\registration\RegistrationForm.tsx ===
+
+// src/components/registration/RegistrationForm.tsx
+import React, { useState } from 'react';
+import type { FormData } from '@/types/registration.types';
+import type { ValidationErrors } from '@/types/validation.types';
+import { useRegistration } from '@/hooks/useRegistration';
+import { ContactSection, RoleSection, TermsSection } from './sections';
+import { ErrorMessage } from '@/components/shared/ErrorMessage';
+import { SuccessMessage } from './SuccessMessage';
+import { LoadingOverlay } from '../shared/LoadingOverlay';
+import { useFormValidation } from '@/hooks/useFormValidation';
+
+const initialFormState: FormData = {
+  personalInfo: {
+    firstName: '',
+    lastName: '',
+    email: '',
+    phone: '',
+    birthDate: '',
+  },
+  roleInfo: {
+    role: 'runner',
+    distance: undefined,
+    supportType: undefined,
+  },
+  medicalInfo: {
+    conditions: '',
+    dietary: '',
+    allergies: '',
+  },
+  emergencyContact: {
+    name: '',
+    phone: '',
+    relation: '',
+  },
+  terms: {
+    acceptedTerms: false,
+    acceptedPrivacyPolicy: false,
+    acceptedDate: '',
+  },
+};
+
+export const RegistrationForm: React.FC = () => {
+  const [formData, setFormData] = useState<FormData>(initialFormState);
+  const [showSuccess, setShowSuccess] = useState(false);
+  const { loading, error, submitRegistration } = useRegistration();
+  const { validateForm } = useFormValidation();
+  const [validationErrors, setValidationErrors] = useState<ValidationErrors>({});
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    const errors = validateForm(formData);
+    if (Object.keys(errors).length > 0) {
+      setValidationErrors(errors);
+      return;
+    }
+
+    try {
+      await submitRegistration({ formData });
+      setShowSuccess(true);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  return (
+    <div className="relative w-full max-w-[900px] mx-auto my-16 p-12 bg-white rounded-xl shadow-lg">
+      {loading && <LoadingOverlay message="Je inschrijving wordt verwerkt..." />}
+      
+      {error && (
+        <div className="mb-6" role="alert">
+          <ErrorMessage message={error} />
+        </div>
+      )}
+      
+      {showSuccess ? (
+        <SuccessMessage formData={formData} />
+      ) : (
+        <form onSubmit={handleSubmit} className="space-y-12">
+          <ContactSection 
+            formData={formData} 
+            setFormData={setFormData}
+            errors={validationErrors.personalInfo}
+          />
+          <RoleSection 
+            formData={formData} 
+            setFormData={setFormData}
+            errors={validationErrors.roleInfo}
+          />
+          <TermsSection 
+            formData={formData} 
+            setFormData={setFormData}
+            errors={validationErrors.terms}
+          />
+          
+          <div className="flex justify-center">
+            <button
+              type="submit"
+              disabled={loading}
+              className="w-full max-w-[350px] py-5 px-8 bg-primary text-white font-semibold text-lg 
+                rounded-xl transition-all duration-300 hover:bg-primary-dark hover:-translate-y-1 hover:shadow-lg
+                disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              {loading ? 'Bezig met verzenden...' : 'Inschrijven'}
+            </button>
+          </div>
+        </form>
+      )}
+    </div>
+  );
+};
+
+
+
+=== File 44/64: src\components\registration\sections\ContactSection.tsx ===
+
+// src/components/registration/sections/ContactSection.tsx
+import React from 'react';
+import type { SectionProps, PersonalInfo } from '@/types/registration.types';
+
+const ContactSection: React.FC<SectionProps> = ({ formData, setFormData, errors }) => {
+  const handleChange = (field: keyof PersonalInfo, value: string) => {
+    setFormData({
+      ...formData,
+      personalInfo: {
+        ...formData.personalInfo,
+        [field]: value
+      }
+    });
+  };
+
+  return (
+    <div className="space-y-6">
+      <h2 className="text-2xl font-bold">Persoonlijke Gegevens</h2>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+        <div>
+          <label htmlFor="firstName" className="block text-sm font-medium text-gray-700 mb-1">
+            Voornaam
+          </label>
+          <input
+            type="text"
+            id="firstName"
+            value={formData.personalInfo.firstName}
+            onChange={(e) => handleChange('firstName', e.target.value)}
+            className="w-full px-5 py-4 rounded-xl border-2 border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all"
+            placeholder="Vul je voornaam in"
+            required
+          />
+          {errors?.firstName && <p className="text-red-500 text-sm">{errors.firstName}</p>}
+        </div>
+        
+        {/* Herhaal dit voor de andere fields, en toon errors indien aanwezig */}
+        <div>
+          <label htmlFor="lastName" className="block text-sm font-medium text-gray-700 mb-1">
+            Achternaam
+          </label>
+          <input
+            type="text"
+            id="lastName"
+            value={formData.personalInfo.lastName}
+            onChange={(e) => handleChange('lastName', e.target.value)}
+            className="w-full px-5 py-4 rounded-xl border-2 border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all"
+            placeholder="Vul je achternaam in"
+            required
+          />
+          {errors?.lastName && <p className="text-red-500 text-sm">{errors.lastName}</p>}
+        </div>
+
+        <div>
+          <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+            E-mailadres
+          </label>
+          <input
+            type="email"
+            id="email"
+            value={formData.personalInfo.email}
+            onChange={(e) => handleChange('email', e.target.value)}
+            className="w-full px-5 py-4 rounded-xl border-2 border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all"
+            placeholder="Vul je e-mailadres in"
+            required
+          />
+          {errors?.email && <p className="text-red-500 text-sm">{errors.email}</p>}
+        </div>
+
+        <div>
+          <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">
+            Telefoonnummer
+          </label>
+          <input
+            type="tel"
+            id="phone"
+            value={formData.personalInfo.phone}
+            onChange={(e) => handleChange('phone', e.target.value)}
+            className="w-full px-5 py-4 rounded-xl border-2 border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all"
+            placeholder="Vul je telefoonnummer in"
+            required
+          />
+          {errors?.phone && <p className="text-red-500 text-sm">{errors.phone}</p>}
+        </div>
+
+        <div>
+          <label htmlFor="birthDate" className="block text-sm font-medium text-gray-700 mb-1">
+            Geboortedatum
+          </label>
+          <input
+            type="date"
+            id="birthDate"
+            value={formData.personalInfo.birthDate}
+            onChange={(e) => handleChange('birthDate', e.target.value)}
+            className="w-full px-5 py-4 rounded-xl border-2 border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all"
+            required
+          />
+          {errors?.birthDate && <p className="text-red-500 text-sm">{errors.birthDate}</p>}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default ContactSection;
+
+
+
+=== File 45/64: src\components\registration\sections\DistanceSection.tsx ===
+
+import React from 'react';
+import type { SectionProps } from '@/types/registration.types';
+import { RadioCard } from '../RadioCard';
+
+const distances: Array<{
+  value: number;
+  icon: string;
+  title: string;
+  description: string;
+}> = [
+  {
+    value: 5,
+    icon: '🚶',
+    title: '5 KM',
+    description: 'Ideaal voor beginners'
+  },
+  {
+    value: 10,
+    icon: '🏃',
+    title: '10 KM',
+    description: 'Voor de gevorderde wandelaar'
+  },
+  {
+    value: 21,
+    icon: '🏃‍♂️',
+    title: '21 KM',
+    description: 'Halve marathon afstand'
+  }
+];
+
+const DistanceSection: React.FC<SectionProps> = ({ formData, setFormData }) => {
+  if (formData.roleInfo.role !== 'runner') {
+    return null;
+  }
+
+  const handleDistanceChange = (value: number) => {
+    setFormData({
+      ...formData,
+      roleInfo: {
+        ...formData.roleInfo,
+        distance: value
+      }
+    });
+  };
+
+  return (
+    <div className="space-y-6">
+      <h2 className="text-2xl font-bold">Kies je afstand</h2>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {distances.map((distance) => (
+          <RadioCard
+            key={distance.value}
+            name="distance"
+            value={distance.value.toString()}
+            icon={distance.icon}
+            title={distance.title}
+            description={distance.description}
+            checked={formData.roleInfo.distance === distance.value}
+            onChange={(value) => handleDistanceChange(parseInt(value, 10))}
+          />
+        ))}
+      </div>
+    </div>
+  );
+};
+
+export default DistanceSection; 
+
+
+=== File 46/64: src\components\registration\sections\RoleSection.tsx ===
+
+import React from 'react';
+import type { SectionProps, Role } from '@/types/registration.types';
+import { RadioCard } from '../RadioCard';
+
+const roles: Array<{
+  value: Role;
+  icon: string;
+  title: string;
+  description: string;
+}> = [
+  {
+    value: 'runner',
+    icon: '🏃',
+    title: 'Hardloper',
+    description: 'Doe mee aan de wandeltocht'
+  },
+  {
+    value: 'volunteer',
+    icon: '🤝',
+    title: 'Vrijwilliger',
+    description: 'Help mee tijdens het evenement'
+  },
+  {
+    value: 'supporter',
+    icon: '📣',
+    title: 'Supporter',
+    description: 'Steun het evenement'
+  }
+];
+
+const RoleSection: React.FC<SectionProps> = ({ formData, setFormData }) => {
+  const handleRoleChange = (value: Role) => {
+    setFormData({
+      ...formData,
+      roleInfo: {
+        ...formData.roleInfo,
+        role: value,
+        distance: value === 'runner' ? formData.roleInfo.distance : undefined
+      }
+    });
+  };
+
+  return (
+    <div className="space-y-6">
+      <h2 className="text-2xl font-bold">Kies je rol</h2>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {roles.map((role) => (
+          <RadioCard
+            key={role.value}
+            name="role"
+            value={role.value.toString()}
+            icon={role.icon}
+            title={role.title}
+            description={role.description}
+            checked={formData.roleInfo.role === role.value}
+            onChange={(value) => handleRoleChange(value as Role)}
+          />
+        ))}
+      </div>
+    </div>
+  );
+};
+
+export default RoleSection; 
+
+
+=== File 47/64: src\components\registration\sections\SupportSection.tsx ===
+
+import React from 'react';
+import type { SectionProps } from '@/types/registration.types';
+import { RadioCard } from '../RadioCard';
+
+type SupportType = 'volunteer' | 'donation';
+
+const SupportSection: React.FC<SectionProps> = ({ formData, setFormData }) => {
+  const handleSupportTypeChange = (value: string) => {
+    setFormData(prev => ({
+      ...prev,
+      roleInfo: {
+        ...prev.roleInfo,
+        role: 'supporter',
+        supportType: value as SupportType
+      }
+    }));
+  };
+
+  return (
+    <section className="space-y-6">
+      <div>
+        <h2 className="text-xl font-semibold mb-4">Hoe wil je ondersteunen?</h2>
+        <p className="text-gray-600 mb-6">
+          Kies hoe je het evenement wilt ondersteunen.
+        </p>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <RadioCard
+          name="supportType"
+          value="donation"
+          checked={formData.roleInfo.supportType === 'donation'}
+          onChange={handleSupportTypeChange}
+          title="Donatie"
+          description="Ondersteun het evenement met een donatie"
+        />
+        <RadioCard
+          name="supportType"
+          value="volunteer"
+          checked={formData.roleInfo.supportType === 'volunteer'}
+          onChange={handleSupportTypeChange}
+          title="Vrijwilliger"
+          description="Help mee als vrijwilliger tijdens het evenement"
+        />
+      </div>
+    </section>
+  );
+};
+
+export default SupportSection; 
+
+
+=== File 48/64: src\components\registration\sections\TermsSection.tsx ===
+
+import React, { useState } from 'react';
+import type { SectionProps } from '@/types/registration.types';
+import { TermsModal } from '../../modals/TermsModal';
+
+const TermsSection: React.FC<SectionProps> = ({ formData, setFormData }) => {
+  const [showTerms, setShowTerms] = useState(false);
+  const [hasReadTerms, setHasReadTerms] = useState(false);
+
+  const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (!hasReadTerms) {
+      setShowTerms(true);
+      return;
+    }
+
+    const now = new Date().toISOString();
+    setFormData({
+      ...formData,
+      terms: {
+        ...formData.terms,
+        acceptedTerms: e.target.checked,
+        acceptedPrivacyPolicy: e.target.checked,
+        acceptedDate: now
+      }
+    });
+  };
+
+  return (
+    <div className="space-y-6">
+      <div className="flex items-start">
+        <div className="flex items-center h-5">
+          <input
+            type="checkbox"
+            checked={formData.terms.acceptedTerms}
+            onChange={handleCheckboxChange}
+            className="w-5 h-5 rounded border-2 border-gray-300 text-primary focus:ring-primary/20"
+          />
+        </div>
+        <div className="ml-3">
+          <label className="text-sm text-gray-700">
+            Ik ga akkoord met de{' '}
+            <button
+              type="button"
+              onClick={() => setShowTerms(true)}
+              className="text-primary hover:underline"
+            >
+              algemene voorwaarden
+            </button>
+          </label>
+        </div>
+      </div>
+
+      <TermsModal
+        isOpen={showTerms}
+        onClose={() => {
+          setShowTerms(false);
+          setHasReadTerms(true);
+        }}
+      />
+    </div>
+  );
+};
+
+export default TermsSection; 
+
+
+=== File 49/64: src\components\registration\SuccessMessage.tsx ===
+
+import React from 'react';
+import type { FormData } from '@/types/registration.types';
+
+interface SuccessMessageProps {
+  formData: FormData;
+}
+
+export const SuccessMessage: React.FC<SuccessMessageProps> = ({ formData }) => {
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50">
+      <div className="w-full max-w-[600px] bg-white rounded-xl p-8 shadow-xl">
+        <div className="text-center mb-8">
+          <div className="text-5xl mb-4">🎉</div>
+          <h2 className="text-2xl font-bold text-gray-900 mb-2">
+            Bedankt voor je inschrijving!
+          </h2>
+          <p className="text-gray-600">
+            We hebben je inschrijving ontvangen en zullen deze zo snel mogelijk verwerken.
+          </p>
+        </div>
+
+        <div className="space-y-4">
+          <h3 className="font-semibold text-lg text-gray-900 mb-4">Je gegevens:</h3>
+          
+          <div className="bg-gray-50 rounded-lg p-6 space-y-4">
+            <div className="grid grid-cols-[120px,1fr] gap-4 pb-2 border-b border-gray-200">
+              <span className="text-gray-600">Naam:</span>
+              <span className="font-medium">
+                {formData.personalInfo.firstName} {formData.personalInfo.lastName}
+              </span>
+            </div>
+
+            <div className="grid grid-cols-[120px,1fr] gap-4 pb-2 border-b border-gray-200">
+              <span className="text-gray-600">E-mail:</span>
+              <span className="font-medium">{formData.personalInfo.email}</span>
+            </div>
+
+            <div className="grid grid-cols-[120px,1fr] gap-4 pb-2 border-b border-gray-200">
+              <span className="text-gray-600">Rol:</span>
+              <span className="font-medium">{formData.roleInfo.role}</span>
+            </div>
+
+            {formData.roleInfo.role === 'runner' && (
+              <div className="grid grid-cols-[120px,1fr] gap-4 pb-2 border-b border-gray-200">
+                <span className="text-gray-600">Afstand:</span>
+                <span className="font-medium">{formData.roleInfo.distance}km</span>
+              </div>
+            )}
+
+            {formData.medicalInfo.conditions && (
+              <div className="grid grid-cols-[120px,1fr] gap-4">
+                <span className="text-gray-600">Medisch:</span>
+                <span className="font-medium">{formData.medicalInfo.conditions}</span>
+              </div>
+            )}
+          </div>
+        </div>
+
+        <div className="mt-8 text-center text-sm text-gray-500">
+          Je ontvangt binnen enkele minuten een bevestigingsmail met meer informatie.
+        </div>
+      </div>
+    </div>
+  );
+}; 
+
+
+=== File 50/64: src\components\route\ContentItem.tsx ===
+
+import React from 'react';
+
+interface ContentItemProps {
+  icon: string;
+  title: string;
+  text: string;
+  illustration?: {
+    src: string;
+    caption: string;
+  };
+  mapUrl?: string;
+}
+
+export const ContentItem: React.FC<ContentItemProps> = ({
+  icon,
+  title,
+  text,
+  illustration,
+  mapUrl
+}) => (
+  <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-100 transition-all duration-300 hover:shadow-xl hover:-translate-y-1 relative overflow-hidden group">
+    {/* Decorative circle */}
+    <div className="absolute -top-20 -right-20 w-40 h-40 bg-primary/10 rounded-full transition-transform duration-300 group-hover:scale-110" />
+    
+    {/* Content */}
+    <div className="relative z-10">
+      <span className="material-icons-round text-4xl text-primary mb-4 block">
+        {icon}
+      </span>
+      <h2 className="text-2xl font-heading font-semibold text-gray-900 mb-4">
+        {title}
+      </h2>
+      <p className="text-gray-600 leading-relaxed mb-6">
+        {text}
+      </p>
+      
+      {illustration && (
+        <div className="text-center my-8">
+          <div className="relative overflow-hidden rounded-xl transition-transform duration-300 hover:scale-[1.02]">
+            <img
+              src={illustration.src}
+              alt={`Tekening: ${illustration.caption}`}
+              className="w-full h-auto"
+              loading="eager"
+            />
+          </div>
+          <p className="mt-2 text-sm text-gray-500 italic">
+            Tekening: {illustration.caption}
+          </p>
+        </div>
+      )}
+      
+      {mapUrl && (
+        <div className="mt-6 rounded-xl overflow-hidden shadow-lg">
+          <iframe 
+            src={mapUrl}
+            className="w-full h-[500px] border-0"
+            scrolling="no"
+            title="Route kaart"
+          />
+        </div>
+      )}
+    </div>
+  </div>
+);
+ 
+
+
+=== File 51/64: src\components\route\RouteSection.tsx ===
+
+import React from 'react';
+import { ContentItem } from './ContentItem';
+import { contentItems } from './route.data';
+
+const RouteSection: React.FC = () => {
+  return (
+    <div className="w-full bg-white font-roboto text-gray-800 antialiased">
+      {/* Header Sectie */}
+      <div className="relative py-20 px-6 text-center overflow-hidden bg-gradient-to-b from-primary/10 to-transparent">
+        <div className="relative z-10 max-w-4xl mx-auto">
+          <span className="material-icons-round text-8xl md:text-9xl text-primary mb-6 inline-block
+            animate-[float_3s_ease-in-out_infinite] hover:scale-110 transition-transform cursor-default">
+            directions_walk
+          </span>
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold font-heading text-gray-900 leading-tight">
+            De Loop over
+            <br />
+            De Koninklijke Weg
+          </h1>
+        </div>
+        {/* Decoratieve elementen */}
+        <div className="absolute inset-0 bg-gradient-radial from-primary/10 to-transparent animate-spin-slow" />
+        <div className="absolute -top-1/2 -left-1/2 w-full h-full bg-gradient-radial from-primary/5 to-transparent animate-spin-slow" style={{ animationDelay: '-5s' }} />
+        <div className="absolute -bottom-1/2 -right-1/2 w-full h-full bg-gradient-radial from-primary/5 to-transparent animate-spin-slow" style={{ animationDelay: '-10s' }} />
+      </div>
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <p className="text-lg md:text-xl text-center text-gray-600 font-light leading-relaxed mb-16 max-w-4xl mx-auto">
+          Met Koninklijke Loop wandelen we over een speciaal wandelpad. Het is namelijk het laatste stukje van de Koninklijke Weg. 
+          Deze route loopt van Paleis Noordeinde naar Paleis Het Loo, en is bij elkaar 170 kilometer lang. 
+          Natuurlijk gaan we dat hele stuk niet op zaterdag 17 mei lopen. Met de Koninklijke Loop wandelen we van Kootwijk naar Paleis Het Loo.
+        </p>
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          {contentItems.map((item, index) => (
+            <ContentItem key={index} {...item} />
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default RouteSection; 
+
+
+=== File 52/64: src\components\shared\ErrorBoundary.test.tsx ===
+
+import { render, screen } from '@testing-library/react';
+import '@testing-library/jest-dom';
+import { ErrorBoundary } from './ErrorBoundary';
+
+// Test component die een error gooit
+const ThrowError = () => {
+  throw new Error('Test error');
+  return null;
+};
+
+describe('ErrorBoundary', () => {
+  // Onderdruk console.error tijdens tests
+  const originalError = console.error;
+  beforeAll(() => {
+    console.error = jest.fn();
+  });
+  
+  afterAll(() => {
+    console.error = originalError;
+  });
+
+  it('renders children when no error occurs', () => {
+    render(
+      <ErrorBoundary>
+        <div>Test content</div>
+      </ErrorBoundary>
+    );
+
+    expect(screen.getByText('Test content')).toBeInTheDocument();
+  });
+
+  it('renders fallback UI when error occurs', () => {
+    render(
+      <ErrorBoundary>
+        <ThrowError />
+      </ErrorBoundary>
+    );
+
+    expect(screen.getByText('Er is iets misgegaan')).toBeInTheDocument();
+    expect(screen.getByText(/Probeer de pagina te verversen/)).toBeInTheDocument();
+  });
+
+  it('renders custom fallback when provided', () => {
+    const customFallback = <div>Custom error message</div>;
+    
+    render(
+      <ErrorBoundary fallback={customFallback}>
+        <ThrowError />
+      </ErrorBoundary>
+    );
+
+    expect(screen.getByText('Custom error message')).toBeInTheDocument();
+  });
+
+  it('calls onError when error occurs', () => {
+    const onError = jest.fn();
+    
+    render(
+      <ErrorBoundary onError={onError}>
+        <ThrowError />
+      </ErrorBoundary>
+    );
+
+    expect(onError).toHaveBeenCalled();
+    expect(onError.mock.calls[0][0]).toBeInstanceOf(Error);
+    expect(onError.mock.calls[0][0].message).toBe('Test error');
+  });
+}); 
+
+
+=== File 53/64: src\components\shared\ErrorBoundary.tsx ===
+
+import React, { Component, ErrorInfo, ReactNode } from 'react';
+
+interface Props {
+  children: ReactNode;
+  fallback?: ReactNode;
+  onError?: (error: Error, errorInfo: ErrorInfo) => void;
+}
+
+interface State {
+  hasError: boolean;
+  error: Error | null;
+}
+
+export class ErrorBoundary extends Component<Props, State> {
+  public state: State = {
+    hasError: false,
+    error: null
+  };
+
+  public static getDerivedStateFromError(error: Error): State {
+    return { hasError: true, error };
+  }
+
+  public componentDidCatch(error: Error, errorInfo: ErrorInfo) {
+    console.error('ErrorBoundary caught an error:', error, errorInfo);
+    this.props.onError?.(error, errorInfo);
+  }
+
+  public render() {
+    if (this.state.hasError) {
+      if (this.props.fallback) {
+        return this.props.fallback;
+      }
+
+      return (
+        <div className="min-h-[200px] flex items-center justify-center p-8 bg-red-50 rounded-xl">
+          <div className="text-center">
+            <h2 className="text-xl font-semibold text-red-800 mb-2">
+              Er is iets misgegaan
+            </h2>
+            <p className="text-red-600">
+              Probeer de pagina te verversen of neem contact op met support.
+            </p>
+          </div>
+        </div>
+      );
+    }
+
+    return this.props.children;
+  }
+} 
+
+
+=== File 54/64: src\components\shared\ErrorMessage.tsx ===
+
+import React from 'react';
+
+interface ErrorMessageProps {
+  message: string;
+  className?: string;
+}
+
+export const ErrorMessage: React.FC<ErrorMessageProps> = ({ message, className = '' }) => {
+  return (
+    <div className={`
+      bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded relative
+      ${className}
+    `}>
+      <span className="block sm:inline">{message}</span>
+    </div>
+  );
+}; 
+
+
+=== File 55/64: src\components\shared\LoadingOverlay.tsx ===
+
+import React from 'react';
+
+interface LoadingOverlayProps {
+  message?: string;
+}
+
+export const LoadingOverlay: React.FC<LoadingOverlayProps> = ({ 
+  message = 'Even geduld...' 
+}) => {
+  return (
+    <div 
+      className="fixed inset-0 bg-black/50 flex items-center justify-center z-50"
+      role="alert"
+      aria-busy="true"
+    >
+      <div className="bg-white p-8 rounded-xl shadow-xl text-center">
+        <div className="animate-spin w-12 h-12 border-4 border-primary border-t-transparent rounded-full mx-auto mb-4" />
+        <p className="text-gray-700">{message}</p>
+      </div>
+    </div>
+  );
+}; 
+
+
+=== File 56/64: src\components\shared\LoadingSpinner.tsx ===
+
+import React from 'react';
+
+interface LoadingSpinnerProps {
+  size?: 'sm' | 'md' | 'lg';
+  className?: string;
+}
+
+export const LoadingSpinner: React.FC<LoadingSpinnerProps> = ({ 
+  size = 'md',
+  className = ''
+}) => {
+  const sizeClasses = {
+    sm: 'w-5 h-5',
+    md: 'w-8 h-8',
+    lg: 'w-12 h-12'
+  };
+
+  return (
+    <div className={`flex justify-center items-center ${className}`}>
+      <div className={`
+        animate-spin rounded-full 
+        border-t-2 border-b-2 border-primary
+        ${sizeClasses[size]}
+      `} />
+    </div>
+  );
+}; 
+
+
+=== File 57/64: src\components\socials\DKLSocials.tsx ===
+
+import React from 'react';
+import type { SocialLink } from './types';
+import { socialLinks } from './data';
+import SocialIcon from './SocialIcon';
+
+const DKLSocials: React.FC = () => {
+  return (
+    <section className="bg-gray-900 py-20 px-5">
+      <div className="max-w-7xl mx-auto">
+        {/* Title */}
+        <div className="text-center mb-16 relative">
+          <h2 className="text-[clamp(1.75rem,4vw,2rem)] text-white font-semibold mb-5">
+            Volg ons op sociale media
+          </h2>
+          <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-10 h-[3px] bg-primary rounded-full" />
+        </div>
+
+        {/* Social Icons Grid */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-5 md:gap-8 max-w-[800px] mx-auto">
+          {socialLinks.map((social: SocialLink) => (
+            <a
+              key={social.platform}
+              href={social.url}
+              className={`
+                aspect-square flex items-center justify-center
+                rounded-2xl transition-all duration-300
+                hover:-translate-y-1 hover:shadow-lg
+                focus:outline-none focus:ring-2 focus:ring-primary/40
+                ${social.bgColorClass}
+              `}
+              aria-label={`Volg ons op ${social.platform}`}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <SocialIcon
+                platform={social.platform}
+                className={`w-10 h-10 md:w-12 md:h-12 transition-transform duration-300 group-hover:scale-110 ${social.iconColorClass}`}
+              />
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default DKLSocials; 
+
+
+=== File 58/64: src\components\socials\SocialIcon.tsx ===
+
+import React from 'react';
+import { SocialLink } from './social.data';
+
+interface SocialIconProps {
+  platform: SocialLink['platform'];
+  className?: string;
+}
+
+export const SocialIcon: React.FC<SocialIconProps> = ({ platform, className = '' }) => {
+  const icons = {
+    facebook: (
+      <path d="M14 13.5h2.5l1-4H14v-2c0-1.03 0-2 2-2h1.5V2.14c-.326-.043-1.557-.14-2.857-.14C11.928 2 10 3.657 10 6.7v2.8H7v4h3V22h4V13.5z" />
+    ),
+    instagram: (
+      <path d="M12 2c2.717 0 3.056.01 4.122.06 1.065.05 1.79.217 2.428.465.66.254 1.216.598 1.772 1.153.509.5.902 1.105 1.153 1.772.247.637.415 1.363.465 2.428.047 1.066.06 1.405.06 4.122 0 2.717-.01 3.056-.06 4.122-.05 1.065-.218 1.79-.465 2.428a4.883 4.883 0 0 1-1.153 1.772c-.5.508-1.105.902-1.772 1.153-.637.247-1.363.415-2.428.465-1.066.047-1.405.06-4.122.06-2.717 0-3.056-.01-4.122-.06-1.065-.05-1.79-.218-2.428-.465a4.89 4.89 0 0 1-1.772-1.153 4.904 4.904 0 0 1-1.153-1.772c-.248-.637-.415-1.363-.465-2.428C2.013 15.056 2 14.717 2 12c0-2.717.01-3.056.06-4.122.05-1.066.217-1.79.465-2.428a4.88 4.88 0 0 1 1.153-1.772A4.897 4.897 0 0 1 5.45 2.525c.638-.248 1.362-.415 2.428-.465C8.944 2.013 9.283 2 12 2zm0 5a5 5 0 1 0 0 10 5 5 0 0 0 0-10zm6.5-.25a1.25 1.25 0 0 0-2.5 0 1.25 1.25 0 0 0 2.5 0zM12 9a3 3 0 1 1 0 6 3 3 0 0 1 0-6z" />
+    ),
+    youtube: (
+      <path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z" />
+    ),
+    linkedin: (
+      <path d="M6.94 5a2 2 0 1 1-4-.002 2 2 0 0 1 4 .002zM7 8.48H3V21h4V8.48zm6.32 0H9.34V21h3.94v-6.57c0-3.66 4.77-4 4.77 0V21H22v-7.93c0-6.17-7.06-5.94-8.72-2.91l.04-1.68z" />
+    )
+  };
+
+  return (
+    <svg className={className} viewBox="0 0 24 24">
+      {icons[platform]}
+    </svg>
+  );
+};
+
+export default SocialIcon; 
+
+
+=== File 59/64: src\components\sponsors\DKLSponsors.tsx ===
+
+import React from 'react';
+import { sponsors } from './data';
+
+const DKLSponsors: React.FC = () => {
+  return (
+    <section className="py-20 px-5 bg-white">
+      <div className="max-w-7xl mx-auto">
+        {/* Title */}
+        <div className="text-center mb-16 relative">
+          <h2 className="text-[clamp(2rem,4vw,2.75rem)] text-gray-900 font-bold mb-4 tracking-tight">
+            Onze Sponsors
+          </h2>
+          <p className="text-[clamp(1rem,2.5vw,1.25rem)] text-gray-600 max-w-2xl mx-auto mb-6">
+            Deze geweldige partners maken De Koninklijke Loop mogelijk
+          </p>
+          <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-16 h-0.5 bg-primary rounded-full" />
+        </div>
+
+        {/* Sponsors Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          {sponsors
+            .sort((a, b) => a.order - b.order)
+            .map((sponsor) => (
+              <a
+                key={sponsor.id}
+                href={sponsor.websiteUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group relative bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden"
+              >
+                {/* Logo Container */}
+                <div className="aspect-[3/2] p-6 flex items-center justify-center bg-gray-50 group-hover:bg-gray-100 transition-colors">
+                  <img
+                    src={sponsor.logoUrl}
+                    alt={`${sponsor.name} logo`}
+                    className="max-w-[80%] max-h-[80%] object-contain transition-transform duration-300 group-hover:scale-105"
+                  />
+                </div>
+
+                {/* Content */}
+                <div className="p-6">
+                  <h3 className="text-xl font-semibold text-gray-900 mb-2 group-hover:text-primary transition-colors">
+                    {sponsor.name}
+                  </h3>
+                  <p className="text-gray-600 text-sm line-clamp-3">
+                    {sponsor.description}
+                  </p>
+                </div>
+
+                {/* Hover Overlay */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
+              </a>
+            ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default DKLSponsors; 
+
+
+=== File 60/64: src\components\title\TitleSection.tsx ===
+
+import React from 'react';
+
+const TitleSection: React.FC = () => {
+  return (
+    <section className="relative w-full bg-white py-8 text-center font-['Roboto_Slab'] overflow-hidden isolate">
+      {/* Accent Bars */}
+      <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-primary to-primary-light" aria-hidden="true" />
+      <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-primary to-primary-light" aria-hidden="true" />
+
+      {/* Side Decorations */}
+      <div className="absolute top-0 -left-24 bottom-0 w-[15vw] min-w-[60px] max-w-[200px] bg-gradient-45 from-primary/10 to-primary-light/10 -skew-x-15 -z-10" aria-hidden="true" />
+      <div className="absolute top-0 -right-24 bottom-0 w-[15vw] min-w-[60px] max-w-[200px] bg-gradient-45 from-primary/10 to-primary-light/10 skew-x-15 -z-10" aria-hidden="true" />
+
+      <div className="max-w-[900px] mx-auto px-4 py-6 relative">
+        {/* Circular Decorations */}
+        <div className="hidden lg:block absolute top-1/2 -left-[60px] w-[clamp(30px,4vw,40px)] h-[clamp(30px,4vw,40px)] bg-primary/10 rounded-full -translate-y-1/2" aria-hidden="true" />
+        <div className="hidden lg:block absolute top-1/2 -right-[60px] w-[clamp(30px,4vw,40px)] h-[clamp(30px,4vw,40px)] bg-primary/10 rounded-full -translate-y-1/2" aria-hidden="true" />
+
+        {/* Content */}
+        <div className="flex flex-col gap-2">
+          <h2 className="text-[clamp(1.75rem,4vw,2.5rem)] leading-tight text-gray-900 font-bold tracking-tight">
+            Doe je met ons mee?
+          </h2>
+          <p className="text-[clamp(1.5rem,3.5vw,2rem)] leading-snug text-gray-600">
+            Samen op weg voor een goed doel.
+          </p>
+          <p className="text-[clamp(1.5rem,3.5vw,2rem)] leading-snug text-primary font-semibold">
+            Loop mee met de Koninklijke Loop!
+          </p>
+        </div>
+
+        {/* Image */}
+        <div className="mt-6 max-w-[600px] mx-auto p-2.5">
+          <img 
+            src="https://cdn.prod.website-files.com/65c6896e8519c5d0bae5586f/664e0964fa35c47383d2304a_IMG-20240518-WA0027.jpg"
+            alt="Deelnemers van de Koninklijke Loop in actie"
+            className="w-full h-auto aspect-video object-cover rounded-lg shadow-lg"
+            loading="lazy"
+            width="400"
+            height="300"
+            decoding="async"
+          />
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default TitleSection; 
+
+
+=== File 61/64: src\components\video\DotIndicator.tsx ===
+
+import React from 'react';
+
+interface DotIndicatorProps {
+  isActive: boolean;
+  onClick: () => void;
+}
+
+const DotIndicator: React.FC<DotIndicatorProps> = ({ isActive, onClick }) => {
+  return (
+    <button
+      className={`
+        w-2 h-2 rounded-full
+        transition-all duration-300
+        ${isActive 
+          ? 'bg-primary scale-125' 
+          : 'bg-gray-300 hover:bg-gray-400'
+        }
+      `}
+      onClick={onClick}
+      aria-selected={isActive}
+      role="tab"
+    />
+  );
+};
+
+export default DotIndicator; 
+
+
+=== File 62/64: src\components\video\NavigationButton.tsx ===
+
+import React from 'react';
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+
+interface NavigationButtonProps {
+  direction: 'previous' | 'next';
+  onClick: () => void;
+  disabled?: boolean;
+}
+
+const NavigationButton: React.FC<NavigationButtonProps> = ({ direction, onClick, disabled }) => {
+  const Icon = direction === 'previous' ? ChevronLeftIcon : ChevronRightIcon;
+  
+  return (
+    <button
+      className={`
+        flex items-center gap-1.5
+        bg-white/90 hover:bg-white
+        py-2 ${direction === 'previous' ? 'pl-3 pr-4' : 'pl-4 pr-3'}
+        rounded-full
+        shadow-md hover:shadow-lg
+        transition-all duration-300
+        disabled:opacity-50 disabled:cursor-not-allowed
+        border border-gray-100
+        text-gray-700
+      `}
+      onClick={onClick}
+      disabled={disabled}
+      aria-label={direction === 'previous' ? 'Vorige video' : 'Volgende video'}
+    >
+      {direction === 'previous' && <Icon className="text-lg" />}
+      <span className="text-sm font-medium whitespace-nowrap">
+        {direction === 'previous' ? 'Vorige' : 'Volgende'}
+      </span>
+      {direction === 'next' && <Icon className="text-lg" />}
+    </button>
+  );
+};
+
+export default NavigationButton; 
+
+
+=== File 63/64: src\components\video\VideoGallery.tsx ===
+
+import React, { useState, useCallback } from 'react';
+import VideoSlide from './VideoSlide.tsx';
+import NavigationButton from './NavigationButton.tsx';
+import DotIndicator from './DotIndicator.tsx';
+
+interface Video {
+  id: string;
+  url: string;
+  title: string;
+}
+
+const videos: Video[] = [
+  {
+    id: 'video1',
+    url: 'https://streamable.com/e/tt6k80?loop=0&autoplay=0&muted=0&controls=1&title=0',
+    title: 'Video 1'
+  },
+  {
+    id: 'video2',
+    url: 'https://streamable.com/e/cvfrpi?loop=0&autoplay=0&muted=0&controls=1&title=0',
+    title: 'Video 2'
+  },
+  {
+    id: 'video3',
+    url: 'https://streamable.com/e/0o2qf9?loop=0&autoplay=0&muted=0&controls=1&title=0',
+    title: 'Video 3'
+  }
+];
+
+const VideoGallery: React.FC = () => {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isLoading, setIsLoading] = useState(true);
+
+  const handlePrevious = useCallback(() => {
+    setCurrentIndex(prev => (prev === 0 ? videos.length - 1 : prev - 1));
+  }, []);
+
+  const handleNext = useCallback(() => {
+    setCurrentIndex(prev => (prev === videos.length - 1 ? 0 : prev + 1));
+  }, []);
+
+  return (
+    <section className="relative py-12 sm:py-16 md:py-20 px-4 sm:px-5 bg-gradient-to-b from-white to-gray-50 font-['Roboto_Slab'] overflow-hidden">
+      {/* Decorative Elements */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute -top-1/4 -right-1/4 w-[800px] h-[800px] rounded-full bg-gradient-to-br from-primary/3 to-transparent blur-[100px] animate-pulse-slow" />
+        <div className="absolute -bottom-1/4 -left-1/4 w-[600px] h-[600px] rounded-full bg-gradient-to-tr from-primary/2 to-transparent blur-[80px] animate-float" />
+      </div>
+
+      {/* Content Container */}
+      <div className="relative z-10 max-w-7xl mx-auto">
+        {/* Title Section */}
+        <div className="text-center mb-8 sm:mb-12 md:mb-16 relative">
+          <h2 className="text-[clamp(1.75rem,4vw,2.25rem)] text-gray-900 font-bold mb-3 sm:mb-4 tracking-tight">
+            Bekijk onze video's
+          </h2>
+          <p className="text-[clamp(1rem,2.5vw,1.25rem)] text-gray-600 max-w-[38ch] mx-auto mb-4 sm:mb-6">
+            Ontdek meer over De Koninklijke Loop
+          </p>
+          {/* Animated underline */}
+          <div className="relative mx-auto w-16 h-0.5 overflow-hidden">
+            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-primary/40 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-primary/20 to-transparent animate-shine" />
+          </div>
+        </div>
+
+        {/* Video Section */}
+        <div className="relative max-w-[min(90vw,1000px)] mx-auto">
+          {/* Video Container */}
+          <div className="relative rounded-[20px] shadow-xl bg-white overflow-hidden">
+            <div 
+              className="flex transition-transform duration-500 ease-out"
+              style={{ transform: `translateX(-${currentIndex * 100}%)` }}
+            >
+              {videos.map((video, index) => (
+                <VideoSlide
+                  key={video.id}
+                  url={video.url}
+                  title={video.title}
+                  isActive={index === currentIndex}
+                  onLoad={() => setIsLoading(false)}
+                />
+              ))}
+            </div>
+
+            {/* Navigation Overlay - Nu alleen zichtbaar op grotere schermen */}
+            <div className="absolute inset-0 hidden sm:flex items-center justify-between px-4 pointer-events-none">
+              <div className="relative z-10 w-full flex items-center justify-between pointer-events-auto">
+                <NavigationButton
+                  direction="previous"
+                  onClick={handlePrevious}
+                  disabled={isLoading}
+                />
+                <NavigationButton
+                  direction="next"
+                  onClick={handleNext}
+                  disabled={isLoading}
+                />
+              </div>
+            </div>
+          </div>
+
+          {/* Mobile Navigation - Alleen zichtbaar op kleine schermen */}
+          <div className="flex sm:hidden justify-center gap-4 mt-4">
+            <NavigationButton
+              direction="previous"
+              onClick={handlePrevious}
+              disabled={isLoading}
+            />
+            <NavigationButton
+              direction="next"
+              onClick={handleNext}
+              disabled={isLoading}
+            />
+          </div>
+
+          {/* Dots Indicator */}
+          <div className="mt-4 sm:mt-6 flex justify-center gap-2" role="tablist">
+            {videos.map((_, index) => (
+              <DotIndicator
+                key={index}
+                isActive={index === currentIndex}
+                onClick={() => setCurrentIndex(index)}
+              />
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default VideoGallery; 
+
+
+=== File 64/64: src\components\video\VideoSlide.tsx ===
+
+import React from 'react';
+
+interface VideoSlideProps {
+  url: string;
+  title: string;
+  isActive: boolean;
+  onLoad: () => void;
+}
+
+const VideoSlide: React.FC<VideoSlideProps> = ({ url, title, isActive, onLoad }) => {
+  return (
+    <div className="flex-shrink-0 w-full">
+      <div className="relative w-full pt-[56.25%] bg-gradient-to-br from-gray-100 to-gray-200 overflow-hidden">
+        {isActive && (
+          <iframe
+            src={url}
+            className="absolute inset-0 w-full h-full border-0"
+            allowFullScreen
+            allow="fullscreen"
+            loading="lazy"
+            title={title}
+            onLoad={onLoad}
+          />
+        )}
+      </div>
+    </div>
+  );
+};
+
+export default VideoSlide; 
+
