@@ -1,7 +1,8 @@
 import { readFileSync, readdirSync, statSync, writeFileSync, unlinkSync } from 'fs';
 import { join, resolve, relative } from 'path';
 import { fileURLToPath } from 'url';
-import { globSync } from 'glob'; // Gebruik globSync voor de synchrone variant
+// Zorg dat je glob op een geschikte versie hebt. Voor glob@8:
+import { sync as globSync } from 'glob';
 
 const __dirname = fileURLToPath(new URL('.', import.meta.url));
 

@@ -1,4 +1,4 @@
-import { readdirSync, statSync } from 'fs';
+import { readdirSync } from 'fs';
 import { join, resolve } from 'path';
 import { fileURLToPath } from 'url';
 
@@ -23,4 +23,4 @@ export async function GET() {
       headers: { 'Content-Type': 'application/json' },
     });
   }
-} 
+}
